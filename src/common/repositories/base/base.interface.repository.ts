@@ -6,7 +6,7 @@ export interface BaseInterfaceRepository<T> {
     save(data: T): Promise<T>;
     delete(id: number): Promise<boolean>;
     findAll(): Promise<T[]>;
-    findOneByCondition(filterCondition: FindOneOptions<T>): Promise<T>;
+    findOne(id: any): Promise<T>;
     findWithRelations(relations: FindManyOptions<T>): Promise<T[]>;
 
 }

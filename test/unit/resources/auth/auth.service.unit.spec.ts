@@ -4,6 +4,7 @@ import { UsersService } from '../../../../src/resources/users/users.service';
 import { UsersRepository } from '../../../../src/resources/users/users.repository';
 import { Users } from '../../../../src/resources/users/entities/Users';
 import { UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 const mockUser: Users = {
       address: '',
       avatar: '',
@@ -27,7 +28,6 @@ const mockUser: Users = {
       lastName: '',
       loginCount: 0,
       mentorId: 0,
-      ownerId: 0,
       password: '',
       phone: '',
       role: undefined,
@@ -56,7 +56,8 @@ describe('AuthService signIn', () => {
           useValue: {
             findOneByCondition: jest.fn(() => mockUser),
           },
-        }
+        },
+        JwtService
       ],
     }).compile();
 
@@ -78,7 +79,7 @@ describe('AuthService signIn', () => {
   });
 
   it('should retrieve user from the database', async () => {
-    const user = await userService.findOne({email: mockUser.email});
+    const user = await userService.findOneByCondition({email: mockUser.email});
     expect(userRepository.findOneByCondition)
       .toHaveBeenCalledWith({email: mockUser.email});
     expect(user.email).toEqual(mockUser.email);

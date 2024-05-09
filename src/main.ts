@@ -2,11 +2,17 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { ConfigService } from '@nestjs/config';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const isProduction = app.get(ConfigService).get('MODE') === 'PROD';
   app.setGlobalPrefix('/api/v'+app.get(ConfigService).get('API_VERSION')); // Setting base path
+  app.useGlobalPipes(new ValidationPipe(
+    {
+      transform: true,
+    }
+  ));
 
   if (!isProduction) {
     const options = new DocumentBuilder()

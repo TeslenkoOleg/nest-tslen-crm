@@ -4,6 +4,7 @@ import { AuthService } from '../../../../src/resources/auth/auth.service';
 import { UsersService } from '../../../../src/resources/users/users.service';
 import { UsersRepository } from '../../../../src/resources/users/users.repository';
 import { SignInDto } from '../../../../src/resources/auth/dto/signIn.dto';
+import { JwtService } from '@nestjs/jwt';
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -19,8 +20,9 @@ describe('AuthController', () => {
           provide: UsersRepository,
           useValue: {
             findOneByCondition: jest.fn(),
-          },
-        }
+          }
+        },
+        JwtService
       ],
     }).compile();
 
@@ -36,7 +38,7 @@ describe('AuthController', () => {
     const signInDto: SignInDto = { email: 'test@example.com', password: 'password123' };
 
     // Mock the expected response from the service
-    const mockResponse = { token: 'sampleToken' };
+    const mockResponse = { accessToken: 'sampleToken' };
 
     jest.spyOn(authService, 'signIn').mockResolvedValue(mockResponse);
 

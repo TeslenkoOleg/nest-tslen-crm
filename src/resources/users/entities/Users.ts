@@ -21,9 +21,6 @@ export class Users {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;
 
-  @Column("int", { name: "ownerId", default: () => "'0'" })
-  ownerId: number;
-
   @Column("enum", {
     name: "role",
     enum: ["admin", "user", "manager"],
