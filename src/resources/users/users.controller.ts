@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Request, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Users } from './entities/Users';
 import { FindOneNumberParams } from '../../common/dto/findOneNumberParams';
-
+import { User } from './decorators/user.decorator';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -17,9 +17,10 @@ export class UsersController {
     return await this.usersService.findAll();
   }
 
+
   @Get(':id')
-  findOne(@Param() params: FindOneNumberParams): Promise<Users> {
-    return this.usersService.findOneById(params.id);
+  findOne(@User() user: Users, @Param() params: FindOneNumberParams): Promise<Users> {
+    return this.usersService.findOneById(params.id, user);
   }
 
   // @Patch(':id')

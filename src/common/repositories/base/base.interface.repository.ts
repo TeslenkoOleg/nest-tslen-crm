@@ -8,5 +8,4 @@ export interface BaseInterfaceRepository<T> {
     findAll(): Promise<T[]>;
     findOne(id: any): Promise<T>;
     findWithRelations(relations: FindManyOptions<T>): Promise<T[]>;
-
 }

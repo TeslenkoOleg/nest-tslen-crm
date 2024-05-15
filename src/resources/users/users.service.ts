@@ -1,8 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { FindOneOptions, Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable } from '@nestjs/common';
 import { Users } from './entities/Users';
 import * as bcrypt from 'bcrypt';
 import { UsersRepository } from './users.repository';
@@ -11,10 +7,12 @@ import { BaseInterfaceService } from '../../common/services/base/base.interface.
 
 @Injectable()
 export class UsersService extends BaseAbstractService<Users> implements BaseInterfaceService{
+  protected currentRepository: UsersRepository;
   constructor(
     private readonly repository: UsersRepository,
   ) {
     super(repository);
+    this.currentRepository = repository;
   }
   async hashValue(value: string): Promise<string> {
     const salt = bcrypt.genSaltSync();
@@ -23,4 +21,6 @@ export class UsersService extends BaseAbstractService<Users> implements BaseInte
   async compareHashedValues(value: string, hashedValue: string): Promise<boolean> {
     return bcrypt.compare(value, hashedValue);
   }
+
+
 }

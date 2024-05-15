@@ -1,9 +1,10 @@
 import { BaseAbstractRepository } from '../../repositories/base/base.abstract.repository';
 import { BaseInterfaceService } from './base.interface.service';
-import { BaseEntity, DeepPartial, FindOptionsWhere } from 'typeorm';
+import { Users } from '../../../resources/users/entities/Users';
 
 export abstract class BaseAbstractService<T> implements BaseInterfaceService{
-  constructor(private readonly baseAbstractRepository: BaseAbstractRepository<T>) { }
+  protected currentRepository: any;
+  protected constructor(private readonly baseAbstractRepository: BaseAbstractRepository<T>) { }
 
   findOneByCondition(options: any): Promise<T> {
         return this.baseAbstractRepository.findOneByCondition(options);
@@ -21,8 +22,20 @@ export abstract class BaseAbstractService<T> implements BaseInterfaceService{
     return this.baseAbstractRepository.findAll();
   }
 
-  async findOneById(id: number | string): Promise<T> {
-    return await this.baseAbstractRepository.findOne(id);
+  async findOneById(id: number, user: Users): Promise<T> {
+    try {
+      let result: any;
+      if ('getOneWithRelations' in this.currentRepository) {
+        result = await this.currentRepository.getOneWithRelations(id, user);
+      }
+      else {
+        result = await this.baseAbstractRepository.findOne(id);
+      }
+      return result;
+    } catch (e) {
+        console.log('error', e);
+        return {} as T;
+    }
   }
 
   update(data: T): Promise<T> {

@@ -13,6 +13,9 @@ import { EventsByUser } from '../../common/entities/EventsByUser';
 import { UserChiefRelation } from '../../common/entities/UserChiefRelation';
 import { UserProbation } from '../../common/entities/UserProbation';
 import { UsersRepository } from './users.repository';
+import { AuthGuard } from '../auth/guards/auth.guard';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
 
@@ -31,7 +34,8 @@ import { UsersRepository } from './users.repository';
   controllers: [UsersController],
   providers: [
     UsersService,
-    UsersRepository
+    UsersRepository,
+    JwtService,
   ],
   exports: [UsersService]
 })
