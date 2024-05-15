@@ -1,11 +1,8 @@
 import { BaseInterfaceRepository } from './base.interface.repository';
-import { DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from 'typeorm';
-import { FindOneNumberParams } from '../../dto/findOneNumberParams';
-export class BaseEntity {
-  id: number;
-}
+import { DeepPartial, FindManyOptions, FindOptionsWhere, Repository } from 'typeorm';
+
 export abstract class BaseAbstractRepository<T> implements BaseInterfaceRepository<T>{
-  private repository: Repository<T>;
+  protected repository: Repository<T>;
   protected constructor(entity: Repository<T>) {
     this.repository = entity;
   }
