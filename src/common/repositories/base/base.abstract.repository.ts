@@ -3,7 +3,7 @@ import { DeepPartial, FindManyOptions, FindOptionsWhere, Repository } from 'type
 
 export abstract class BaseAbstractRepository<T> implements BaseInterfaceRepository<T>{
   protected repository: Repository<T>;
-  protected constructor(entity: Repository<T>) {
+  constructor(entity: Repository<T>) {
     this.repository = entity;
   }
 
