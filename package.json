@@ -23,7 +23,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "test:unit": "jest --config ./test/jest-unit.json"
+    "test:unit": "jest --config ./test/jest-unit.json",
+    "one_test": "npm run test:unit users.controller.unit.spec.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.8",
