@@ -4,11 +4,11 @@ import { Users } from '../../resources/users/entities/Users';
 @Entity("jobPosition", { schema: "tslen" })
 export class JobPosition {
     @PrimaryGeneratedColumn({ type: "int", name: "id" })
-    id: number;
+        id: number;
 
     @Column("varchar", { name: "title", nullable: true, length: 255 })
-    title: string | null;
+        title: string | null;
 
     @OneToMany(() => Users, (users) => users.jobPosition)
-    users: Users[];
+        users: Users[];
 }

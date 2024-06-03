@@ -6,11 +6,11 @@ import { SignInResponseDto } from './dto/signIn.response.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+    constructor (private authService: AuthService) {}
   @SkipAuth()
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  signIn(@Body() signInDto: SignInDto): Promise<SignInResponseDto> {
-    return this.authService.signIn(signInDto.email, signInDto.password);
-  }
+    signIn (@Body() signInDto: SignInDto): Promise<SignInResponseDto> {
+        return this.authService.signIn(signInDto.email, signInDto.password);
+    }
 }

@@ -1,10 +1,10 @@
 import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
+    Column,
+    Entity,
+    Index,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
 } from "typeorm";
 import { Companies } from "./Companies";
 
@@ -12,37 +12,37 @@ import { Companies } from "./Companies";
 @Entity("companyDaysOffRules", { schema: "tslen" })
 export class CompanyDaysOffRules {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
-  id: number;
+      id: number;
 
   @Column("int", { name: "companyId" })
-  companyId: number;
+      companyId: number;
 
   @Column("int", { name: "hospital", nullable: true, default: () => "'11'" })
-  hospital: number | null;
+      hospital: number | null;
 
   @Column("int", { name: "timeOff", nullable: true, default: () => "'11'" })
-  timeOff: number | null;
+      timeOff: number | null;
 
   @Column("int", { name: "vocation", nullable: true, default: () => "'11'" })
-  vocation: number | null;
+      vocation: number | null;
 
   @Column("int", { name: "transfer", nullable: true, default: () => "'11'" })
-  transfer: number | null;
+      transfer: number | null;
 
   @Column("int", { name: "home", nullable: true, default: () => "'11'" })
-  home: number | null;
+      home: number | null;
 
   @Column("tinyint", {
-    name: "useScheduler",
-    nullable: true,
-    default: () => "'0'",
+      name: "useScheduler",
+      nullable: true,
+      default: () => "'0'",
   })
-  useScheduler: number | null;
+      useScheduler: number | null;
 
   @ManyToOne(() => Companies, (companies) => companies.id, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
+      onDelete: "NO ACTION",
+      onUpdate: "NO ACTION",
   })
   @JoinColumn([{ name: "companyId", referencedColumnName: "id" }])
-  company: Companies;
+      company: Companies;
 }

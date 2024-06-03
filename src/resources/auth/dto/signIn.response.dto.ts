@@ -1,3 +1,3 @@
 export class SignInResponseDto{
-  accessToken: string;
+    accessToken: string;
 }
