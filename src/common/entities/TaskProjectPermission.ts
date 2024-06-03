@@ -1,10 +1,10 @@
 import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
+    Column,
+    Entity,
+    Index,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
 } from "typeorm";
 import { TaskProject } from "./TaskProject";
 import { Users } from '../../resources/users/entities/Users';
@@ -14,20 +14,20 @@ import { Users } from '../../resources/users/entities/Users';
 @Entity("taskProjectPermission", { schema: "tslen" })
 export class TaskProjectPermission {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
-  id: number;
+      id: number;
 
   @Column("int", { name: "projectId" })
-  projectId: number;
+      projectId: number;
 
   @Column("int", { name: "userId" })
-  userId: number;
+      userId: number;
 
   @Column("enum", {
-    name: "permission",
-    nullable: true,
-    enum: ["read", "write", "admin"],
+      name: "permission",
+      nullable: true,
+      enum: ["read", "write", "admin"],
   })
-  permission: "read" | "write" | "admin" | null;
+      permission: "read" | "write" | "admin" | null;
 
   @ManyToOne(
       () => TaskProject,
@@ -35,12 +35,12 @@ export class TaskProjectPermission {
       { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
   @JoinColumn([{ name: "projectId", referencedColumnName: "id" }])
-  project: TaskProject;
+      project: TaskProject;
 
   @ManyToOne(() => Users, (users) => users.taskProjectPermissions, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
+      onDelete: "NO ACTION",
+      onUpdate: "NO ACTION",
   })
   @JoinColumn([{ name: "userId", referencedColumnName: "id" }])
-  user: Users;
+      user: Users;
 }

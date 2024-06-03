@@ -2,40 +2,40 @@ import { BaseInterfaceRepository } from './base.interface.repository';
 import { DeepPartial, FindManyOptions, FindOptionsWhere, Repository } from 'typeorm';
 
 export abstract class BaseAbstractRepository<T> implements BaseInterfaceRepository<T>{
-  protected repository: Repository<T>;
-  constructor(entity: Repository<T>) {
-    this.repository = entity;
-  }
-
-  findOne(id: number | string): Promise<T> {
-        return this.repository.findOne({where: { id } as unknown as FindOptionsWhere<T>});
+    protected repository: Repository<T>;
+    constructor (entity: Repository<T>) {
+        this.repository = entity;
     }
-  async create(data: DeepPartial<T>): Promise<T> {
-    return await this.repository.save(data);
-  }
 
-  delete(id: number): Promise<boolean> {
-    return Promise.resolve(false);
-  }
+    findOne (id: number | string): Promise<T> {
+        return this.repository.findOne({ where: { id } as unknown as FindOptionsWhere<T> });
+    }
+    async create (data: DeepPartial<T>): Promise<T> {
+        return await this.repository.save(data);
+    }
 
-  findAll(): Promise<T[]> {
-    return this.repository.find();
-  }
+    delete (id: number): Promise<boolean> {
+        return Promise.resolve(false);
+    }
 
-  public async findOneByCondition(options: FindOptionsWhere<T>): Promise<T> {
-    return await this.repository.findOne(options);
-  }
+    findAll (): Promise<T[]> {
+        return this.repository.find();
+    }
 
-  findWithRelations(relations: FindManyOptions<T>): Promise<T[]> {
-    return Promise.resolve([]);
-  }
+    public async findOneByCondition (options: FindOptionsWhere<T>): Promise<T> {
+        return await this.repository.findOne(options);
+    }
 
-  public async save(data: DeepPartial<T>): Promise<T> {
-    return await this.repository.save(data);
-  }
+    findWithRelations (relations: FindManyOptions<T>): Promise<T[]> {
+        return Promise.resolve([]);
+    }
 
-  update(data: DeepPartial<T>): T {
-    return undefined;
-  }
+    public async save (data: DeepPartial<T>): Promise<T> {
+        return await this.repository.save(data);
+    }
+
+    update (data: DeepPartial<T>): T {
+        return undefined;
+    }
 
 }

@@ -1,10 +1,10 @@
 import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
+    Column,
+    Entity,
+    Index,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
 } from "typeorm";
 import { TaskPhase } from "./TaskPhase";
 import { TaskProject } from "./TaskProject";
@@ -14,26 +14,26 @@ import { TaskProject } from "./TaskProject";
 @Entity("projectPhasesRelation", { schema: "tslen" })
 export class ProjectPhasesRelation {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
-  id: number;
+      id: number;
 
   @Column("int", { name: "projectId", nullable: true })
-  projectId: number | null;
+      projectId: number | null;
 
   @Column("int", { name: "phaseId", nullable: true })
-  phaseId: number | null;
+      phaseId: number | null;
 
   @ManyToOne(() => TaskPhase, (taskPhase) => taskPhase.id, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
+      onDelete: "NO ACTION",
+      onUpdate: "NO ACTION",
   })
   @JoinColumn([{ name: "phaseId", referencedColumnName: "id" }])
-  phase: TaskPhase;
+      phase: TaskPhase;
 
   @ManyToOne(
-    () => TaskProject,
-    (taskProject) => taskProject.projectPhasesRelations,
-    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
+      () => TaskProject,
+      (taskProject) => taskProject.projectPhasesRelations,
+      { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
   @JoinColumn([{ name: "projectId", referencedColumnName: "id" }])
-  project: TaskProject;
+      project: TaskProject;
 }

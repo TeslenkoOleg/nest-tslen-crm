@@ -1,10 +1,10 @@
 import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
+    Column,
+    Entity,
+    Index,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
 } from "typeorm";
 import { UsersGroup } from "./UsersGroup";
 import { Users } from './Users';
@@ -14,26 +14,26 @@ import { Users } from './Users';
 @Entity("userRelationToGroup", { schema: "tslen" })
 export class UserRelationToGroup {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
-  id: number;
+      id: number;
 
   @Column("int", { name: "userId", nullable: true })
-  userId: number | null;
+      userId: number | null;
 
   @Column("int", { name: "groupId", nullable: true })
-  groupId: number | null;
+      groupId: number | null;
 
   @ManyToOne(
-    () => UsersGroup,
-    (usersGroup) => usersGroup.userRelationToGroups,
-    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
+      () => UsersGroup,
+      (usersGroup) => usersGroup.userRelationToGroups,
+      { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
   @JoinColumn([{ name: "groupId", referencedColumnName: "id" }])
-  group: UsersGroup;
+      group: UsersGroup;
 
   @ManyToOne(() => Users, (users) => users.id, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
+      onDelete: "NO ACTION",
+      onUpdate: "NO ACTION",
   })
   @JoinColumn([{ name: "userId", referencedColumnName: "id" }])
-  user: Users;
+      user: Users;
 }

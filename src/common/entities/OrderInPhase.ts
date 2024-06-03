@@ -14,28 +14,28 @@ import { Tasks } from "./Tasks";
 @Entity("orderInPhase", { schema: "tslen" })
 export class OrderInPhase {
     @PrimaryGeneratedColumn({ type: "int", name: "id" })
-    id: number;
+        id: number;
 
     @Column("int", { name: "phaseId", nullable: true })
-    phaseId: number | null;
+        phaseId: number | null;
 
     @Column("int", { name: "taskId", nullable: true })
-    taskId: number | null;
+        taskId: number | null;
 
     @Column("int", { name: "orderId", nullable: true })
-    orderId: number | null;
+        orderId: number | null;
 
     @ManyToOne(() => TaskPhase, (taskPhase) => taskPhase.id, {
         onDelete: "NO ACTION",
         onUpdate: "NO ACTION",
     })
     @JoinColumn([{ name: "phaseId", referencedColumnName: "id" }])
-    phase: TaskPhase;
+        phase: TaskPhase;
 
     @ManyToOne(() => Tasks, (tasks) => tasks.id, {
         onDelete: "CASCADE",
         onUpdate: "NO ACTION",
     })
     @JoinColumn([{ name: "taskId", referencedColumnName: "id" }])
-    task: Tasks;
+        task: Tasks;
 }

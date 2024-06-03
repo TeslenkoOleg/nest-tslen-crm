@@ -1,10 +1,10 @@
 import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
+    Column,
+    Entity,
+    Index,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
 } from "typeorm";
 import { TaskPhase } from "./TaskPhase";
 import { TaskProject } from "./TaskProject";
@@ -14,50 +14,50 @@ import { TaskProject } from "./TaskProject";
 @Entity("tasks", { schema: "tslen" })
 export class Tasks {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
-  id: number;
+      id: number;
 
   @Column("varchar", { name: "title", nullable: true, length: 500 })
-  title: string | null;
+      title: string | null;
 
   @Column("text", { name: "description", nullable: true })
-  description: string | null;
+      description: string | null;
 
   @Column("varchar", { name: "assignessEmail", nullable: true, length: 250 })
-  assignessEmail: string | null;
+      assignessEmail: string | null;
 
   @Column("varchar", { name: "priority", length: 100 })
-  priority: string | null;
+      priority: string | null;
 
   @Column("datetime", { name: "estimate", nullable: true })
-  estimate: Date | null;
+      estimate: Date | null;
 
   @Column("datetime", { name: "createdAt", nullable: true })
-  createdAt: Date | null;
+      createdAt: Date | null;
 
   @Column("varchar", { name: "createdBy", nullable: true, length: 250 })
-  createdBy: string | null;
+      createdBy: string | null;
 
   @Column("varchar", { name: "label", nullable: true, length: 250 })
-  label: string | null;
+      label: string | null;
 
   @Column("datetime", { name: "updatedAt", nullable: true })
-  updatedAt: Date | null;
+      updatedAt: Date | null;
 
   @Column("int", { name: "phaseId", nullable: true })
-  phaseId: number | null;
+      phaseId: number | null;
 
   @Column("int", { name: "projectId", nullable: true })
-  projectId: number | null;
+      projectId: number | null;
 
   @Column("int", { name: "orderId", nullable: true })
-  orderId: number | null;
+      orderId: number | null;
 
   @Column("enum", {
-    name: "status",
-    nullable: true,
-    enum: ["unStatus", "inProgress", "hold", "test", "release", "done"],
+      name: "status",
+      nullable: true,
+      enum: ["unStatus", "inProgress", "hold", "test", "release", "done"],
   })
-  status:
+      status:
     | "unStatus"
     | "inProgress"
     | "hold"
@@ -67,18 +67,18 @@ export class Tasks {
     | null;
 
   @ManyToOne(() => TaskPhase, (taskPhase) => taskPhase.tasks, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
+      onDelete: "NO ACTION",
+      onUpdate: "NO ACTION",
   })
 
   @JoinColumn([{ name: "phaseId", referencedColumnName: "id" }])
-  phaseL: TaskPhase;
+      phaseL: TaskPhase;
 
   @ManyToOne(() => TaskProject, (taskProject) => taskProject.tasks, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
+      onDelete: "NO ACTION",
+      onUpdate: "NO ACTION",
   })
 
   @JoinColumn([{ name: "projectId", referencedColumnName: "id" }])
-  project2: TaskProject;
+      project2: TaskProject;
 }

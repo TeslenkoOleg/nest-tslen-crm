@@ -19,24 +19,24 @@ import { JwtService } from '@nestjs/jwt';
 
 @Module({
 
-  imports: [TypeOrmModule.forFeature([
-    Users,
-    UserRelationToGroup,
-    UsersGroup,
-    Companies,
-    CompanyDaysOffRules,
-    DaysOffScheduler,
-    DaysOff,
-    EventsByUser,
-    UserChiefRelation,
-    UserProbation
-  ])],
-  controllers: [UsersController],
-  providers: [
-    UsersService,
-    UsersRepository,
-    JwtService,
-  ],
-  exports: [UsersService]
+    imports: [TypeOrmModule.forFeature([
+        Users,
+        UserRelationToGroup,
+        UsersGroup,
+        Companies,
+        CompanyDaysOffRules,
+        DaysOffScheduler,
+        DaysOff,
+        EventsByUser,
+        UserChiefRelation,
+        UserProbation
+    ])],
+    controllers: [UsersController],
+    providers: [
+        UsersService,
+        UsersRepository,
+        JwtService,
+    ],
+    exports: [UsersService]
 })
 export class UsersModule {}

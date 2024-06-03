@@ -1,10 +1,10 @@
 import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
+    Column,
+    Entity,
+    Index,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
 } from "typeorm";
 import { Users } from '../../resources/users/entities/Users';
 
@@ -13,55 +13,55 @@ import { Users } from '../../resources/users/entities/Users';
 @Entity("daysOff", { schema: "tslen" })
 export class DaysOff {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
-  id: number;
+      id: number;
 
   @Column("int", { name: "userId", nullable: true })
-  userId: number | null;
+      userId: number | null;
 
   @Column("double", {
-    name: "hospital",
-    nullable: true,
-    precision: 22,
-    default: () => "'0'",
+      name: "hospital",
+      nullable: true,
+      precision: 22,
+      default: () => "'0'",
   })
-  hospital: number | null;
+      hospital: number | null;
 
   @Column("double", {
-    name: "timeOff",
-    nullable: true,
-    precision: 22,
-    default: () => "'0'",
+      name: "timeOff",
+      nullable: true,
+      precision: 22,
+      default: () => "'0'",
   })
-  timeOff: number | null;
+      timeOff: number | null;
 
   @Column("double", {
-    name: "vocation",
-    nullable: true,
-    precision: 22,
-    default: () => "'0'",
+      name: "vocation",
+      nullable: true,
+      precision: 22,
+      default: () => "'0'",
   })
-  vocation: number | null;
+      vocation: number | null;
 
   @Column("double", {
-    name: "transfer",
-    nullable: true,
-    precision: 22,
-    default: () => "'30'",
+      name: "transfer",
+      nullable: true,
+      precision: 22,
+      default: () => "'30'",
   })
-  transfer: number | null;
+      transfer: number | null;
 
   @Column("double", {
-    name: "home",
-    nullable: true,
-    precision: 22,
-    default: () => "'10'",
+      name: "home",
+      nullable: true,
+      precision: 22,
+      default: () => "'10'",
   })
-  home: number | null;
+      home: number | null;
 
   @ManyToOne(() => Users, (user) => user.id, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
+      onDelete: "NO ACTION",
+      onUpdate: "NO ACTION",
   })
   @JoinColumn([{ name: "userId", referencedColumnName: "id" }])
-  user: Users;
+      user: Users;
 }

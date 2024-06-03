@@ -13,45 +13,45 @@ import { UsersRepository } from '../../src/resources/users/users.repository';
 
 const AUTH_TOKEN_OBJECT: SignInResponseDto = { accessToken: 'fake-jwt-token' };
 describe('AuthController (e2e)', () => {
-  let app: INestApplication;
-  let authService;
+    let app: INestApplication;
+    let authService;
 
-  beforeAll(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      controllers: [AuthController],
-      providers: [
-        AuthService,
-        UsersService,
-        JwtService,
-        {
-          provide: UsersRepository,
-          useValue: {
-            findOneByCondition: jest.fn(() => true),
-          },
-        },
-      ],
-    })
-      .compile();
+    beforeAll(async () => {
+        const moduleFixture: TestingModule = await Test.createTestingModule({
+            controllers: [AuthController],
+            providers: [
+                AuthService,
+                UsersService,
+                JwtService,
+                {
+                    provide: UsersRepository,
+                    useValue: {
+                        findOneByCondition: jest.fn(() => true),
+                    },
+                },
+            ],
+        })
+            .compile();
 
-    authService = moduleFixture.get<AuthService>(AuthService);
-    authService.signIn = jest.fn().mockResolvedValue(AUTH_TOKEN_OBJECT);
+        authService = moduleFixture.get<AuthService>(AuthService);
+        authService.signIn = jest.fn().mockResolvedValue(AUTH_TOKEN_OBJECT);
 
-    app = moduleFixture.createNestApplication();
-    await app.init();
-  });
+        app = moduleFixture.createNestApplication();
+        await app.init();
+    });
 
-  afterAll(async () => {
-    await app.close();
-  });
+    afterAll(async () => {
+        await app.close();
+    });
 
-  it('/auth/login (POST)', () => {
-    const signInDto: SignInDto = { email: 'test@example.com', password: 'password123' };
-    return request(app.getHttpServer())
-      .post('/auth/login')
-      .send(signInDto)
-      .expect(HttpStatus.OK)
-      .expect(({ body }) => {
-        expect(body).toEqual(AUTH_TOKEN_OBJECT);
-      });
-  });
+    it('/auth/login (POST)', () => {
+        const signInDto: SignInDto = { email: 'test@example.com', password: 'password123' };
+        return request(app.getHttpServer())
+            .post('/auth/login')
+            .send(signInDto)
+            .expect(HttpStatus.OK)
+            .expect(({ body }) => {
+                expect(body).toEqual(AUTH_TOKEN_OBJECT);
+            });
+    });
 });

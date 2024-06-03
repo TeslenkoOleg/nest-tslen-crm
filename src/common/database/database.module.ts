@@ -10,28 +10,28 @@ import { Tasks } from '../entities/Tasks';
 import { ProjectPhasesRelation } from '../entities/ProjectPhasesRelation';
 
 @Module({
-  imports: [
-    TypeOrmModule.forRootAsync({
-      useFactory: (configService: ConfigService): TypeOrmModuleOptions => ({
-        type: 'mysql',
-        host: configService.getOrThrow('DB_HOST'),
-        port: configService.getOrThrow('DB_PORT'),
-        username: configService.getOrThrow('DB_USER'),
-        password: configService.getOrThrow('DB_PASSWORD'),
-        database: configService.getOrThrow('DB_SCHEMA'),
-        autoLoadEntities: true,
-        entities: [
-          TaskProjectPermission,
-          GoogleCalendar,
-          JobPosition,
-          TaskProject,
-          TaskPhase,
-          Tasks,
-          ProjectPhasesRelation
-        ],
-      }),
-      inject: [ConfigService],
-    }),
-  ],
+    imports: [
+        TypeOrmModule.forRootAsync({
+            useFactory: (configService: ConfigService): TypeOrmModuleOptions => ({
+                type: 'mysql',
+                host: configService.getOrThrow('DB_HOST'),
+                port: configService.getOrThrow('DB_PORT'),
+                username: configService.getOrThrow('DB_USER'),
+                password: configService.getOrThrow('DB_PASSWORD'),
+                database: configService.getOrThrow('DB_SCHEMA'),
+                autoLoadEntities: true,
+                entities: [
+                    TaskProjectPermission,
+                    GoogleCalendar,
+                    JobPosition,
+                    TaskProject,
+                    TaskPhase,
+                    Tasks,
+                    ProjectPhasesRelation
+                ],
+            }),
+            inject: [ConfigService],
+        }),
+    ],
 })
 export class DatabaseModule {}

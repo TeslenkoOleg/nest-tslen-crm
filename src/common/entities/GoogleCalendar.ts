@@ -1,10 +1,10 @@
 import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
+    Column,
+    Entity,
+    Index,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
 } from "typeorm";
 import { Users } from '../../resources/users/entities/Users';
 
@@ -12,21 +12,21 @@ import { Users } from '../../resources/users/entities/Users';
 @Entity("googleCalendar", { schema: "tslen" })
 export class GoogleCalendar {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
-  id: number;
+      id: number;
 
   @Column("int", { name: "userId", nullable: true })
-  userId: number | null;
+      userId: number | null;
 
   @Column("varchar", { name: "calendarId" })
-  calendarId: string;
+      calendarId: string;
 
   @Column("float", { name: "timezone", default: ()=> '0', nullable: true })
-  timezone: number | null;
+      timezone: number | null;
 
   @ManyToOne(() => Users, (users) => users.googleCalendars, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
+      onDelete: "NO ACTION",
+      onUpdate: "NO ACTION",
   })
   @JoinColumn([{ name: "userId", referencedColumnName: "id" }])
-  user: Users;
+      user: Users;
 }

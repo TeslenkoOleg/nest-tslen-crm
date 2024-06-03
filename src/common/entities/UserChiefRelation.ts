@@ -1,10 +1,10 @@
 import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
+    Column,
+    Entity,
+    Index,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
 } from "typeorm";
 import { Users } from '../../resources/users/entities/Users';
 
@@ -12,25 +12,25 @@ import { Users } from '../../resources/users/entities/Users';
 @Entity("userChiefRelation", { schema: "tslen" })
 export class UserChiefRelation {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
-  id: number;
+      id: number;
 
   @Column("int", { name: "userId" })
-  userId: number;
+      userId: number;
 
   @Column("text", { name: "chiefEmail" })
-  chiefEmail: string;
+      chiefEmail: string;
 
   @ManyToOne(() => Users, (users) => users.userChiefRelationsByChief, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
+      onDelete: "NO ACTION",
+      onUpdate: "NO ACTION",
   })
   @JoinColumn([{ name: "chiefEmail", referencedColumnName: "id" }])
-  chief: Users;
+      chief: Users;
 
   @ManyToOne(() => Users, (users) => users.userChiefRelationsByChief, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
+      onDelete: "NO ACTION",
+      onUpdate: "NO ACTION",
   })
   @JoinColumn([{ name: "userId", referencedColumnName: "id" }])
-  user: Users;
+      user: Users;
 }
