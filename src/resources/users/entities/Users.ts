@@ -4,7 +4,6 @@ import {
     Index, JoinColumn, ManyToOne,
     OneToMany,
     OneToOne,
-    PrimaryGeneratedColumn,
 } from "typeorm";
 import { UserRelationToGroup } from './UserRelationToGroup';
 import { DaysOff } from '../../../common/entities/DaysOff';
@@ -14,133 +13,131 @@ import { TaskProjectPermission } from '../../../common/entities/TaskProjectPermi
 import { GoogleCalendar } from '../../../common/entities/GoogleCalendar';
 import { UserProbation } from '../../../common/entities/UserProbation';
 import { JobPosition } from '../../../common/entities/JobPosition';
+import { BaseAbstractEntity } from '../../../common/entities/base/base.abstract.entity';
 
 @Index("email", ["email"], { unique: true })
 @Entity("users", { schema: "tslen" })
-export class Users {
-  @PrimaryGeneratedColumn({ type: "int", name: "id" })
-      id: number;
-
+export class Users extends BaseAbstractEntity<Users> {
   @Column("enum", {
-      name: "role",
-      enum: ["admin", "user", "manager"],
-      default: () => "'advert'",
+    name: "role",
+    enum: ["admin", "user", "manager"],
+    default: () => "'advert'",
   })
-      role: "admin" | "user" | "manager";
+  role: "admin" | "user" | "manager";
 
   @Column("varchar", { name: "firstName", length: 255 })
-      firstName: string;
+  firstName: string;
 
   @Column("varchar", { name: "lastName", length: 255 })
-      lastName: string;
+  lastName: string;
 
   @Column("varchar", { name: "email", unique: true, length: 255 })
-      email: string;
+  email: string;
 
   @Column("varchar", { name: "country", nullable: true, length: 255 })
-      country: string | null;
+  country: string | null;
 
   @Column("varchar", { name: "password", length: 255 })
-      password: string;
+  password: string;
 
   @Column("varchar", { name: "avatar", nullable: true, length: 255 })
-      avatar: string | null;
+  avatar: string | null;
 
   @Column("varchar", { name: "company", length: 255 })
-      company: string;
+  company: string;
 
   @Column("varchar", { name: "address", nullable: true, length: 255 })
-      address: string | null;
+  address: string | null;
 
   @Column("varchar", { name: "phone", nullable: true, length: 255 })
-      phone: string | null;
+  phone: string | null;
 
   @Column("varchar", { name: "skype", nullable: true, length: 64 })
-      skype: string | null;
+  skype: string | null;
 
   @Column("varchar", { name: "emailSpare", nullable: true, length: 255 })
-      emailSpare: string | null;
+  emailSpare: string | null;
 
   @Column("varchar", { name: "tokenActivation", nullable: true, length: 255 })
-      tokenActivation: string | null;
+  tokenActivation: string | null;
 
   @Column("varchar", { name: "tokenReset", nullable: true, length: 255 })
-      tokenReset: string | null;
+  tokenReset: string | null;
 
   @Column("tinyint", { name: "isActive", default: () => "'0'" })
-      isActive: number;
+  isActive: number;
 
   @Column("mediumint", { name: "loginCount", nullable: true })
-      loginCount: number | null;
+  loginCount: number | null;
 
   @Column("datetime", { name: "lastLogin", nullable: true })
-      lastLogin: Date | null;
+  lastLogin: Date | null;
 
   @Column("int", { name: "companyId", nullable: true })
-      companyId: number | null;
+  companyId: number | null;
 
   @Column("int", { name: "chiefId", nullable: true })
-      chiefId: number | null;
+  chiefId: number | null;
 
   @Column("int", { name: "mentorId", nullable: true })
-      mentorId: number | null;
+  mentorId: number | null;
 
   @Column("date", { name: "birthDay", nullable: true })
-      birthDay: Date | null;
+  birthDay: Date | null;
 
   @Column("date", { name: "firstDayInCompany", nullable: true })
-      firstDayInCompany: Date | null;
+  firstDayInCompany: Date | null;
 
   @Column("date", { name: "lastDayInCompany", nullable: true })
-      lastDayInCompany: Date | null;
+  lastDayInCompany: Date | null;
 
   @Column("varchar", { name: "jobPosition", nullable: true })
-      jobPosition: string | null;
+  jobPosition: string | null;
 
 
   @OneToMany(
       () => UserRelationToGroup,
-      (userRelationToGroup) => userRelationToGroup.user
+      (userRelationToGroup) => userRelationToGroup.user, { cascade: true }
   )
-      userRelationToGroups: UserRelationToGroup[];
+  userRelationToGroups: UserRelationToGroup[];
 
   @OneToOne(() => DaysOff, (daysOff) => daysOff.user)
-      daysOff: DaysOff[];
+  daysOff: DaysOff[];
 
   @OneToMany(() => EventsByUser, (eventsByUser) => eventsByUser.user)
-      eventsByUsers: EventsByUser[];
+  eventsByUsers: EventsByUser[];
 
   @OneToMany(() => EventsByUser, (eventsByUser) => eventsByUser.user)
-      eventsByUsersRequest: EventsByUser[];
+  eventsByUsersRequest: EventsByUser[];
 
   @OneToMany(
       () => UserChiefRelation,
       (userChiefRelation) => userChiefRelation.chief
   )
-      userChiefRelationsByChief: UserChiefRelation[];
+  userChiefRelationsByChief: UserChiefRelation[];
 
   @OneToMany(
       () => UserChiefRelation,
-      (userChiefRelation) => userChiefRelation.user
+      (userChiefRelation) => userChiefRelation.user, { cascade: true }
   )
-      userChiefRelations: UserChiefRelation[];
+  userChiefRelations: UserChiefRelation[];
   @OneToMany(
       () => TaskProjectPermission,
       (taskProjectPermission) => taskProjectPermission.user
   )
-      taskProjectPermissions: TaskProjectPermission[];
+  taskProjectPermissions: TaskProjectPermission[];
 
   @OneToOne(() => GoogleCalendar, (googleCalendar) => googleCalendar.user)
-      googleCalendars: GoogleCalendar;
+  googleCalendars: GoogleCalendar;
 
-  @OneToOne(() => UserProbation, (userProbation) => userProbation.user)
-      userProbation: UserProbation;
+  @OneToOne(() => UserProbation, (userProbation) => userProbation.user, { cascade: true })
+  userProbation: UserProbation;
 
   @ManyToOne(() => JobPosition, (jobPosition) => jobPosition.users, {
       onDelete: "NO ACTION",
       onUpdate: "NO ACTION",
   })
   @JoinColumn([{ name: "jobPosition", referencedColumnName: "id" }])
-      jobPositionDetails: JobPosition[];
+  jobPositionDetails: JobPosition[];
 
 }

@@ -3,16 +3,14 @@ import {
     Entity,
     Index,
     JoinColumn,
-    OneToOne,
-    PrimaryGeneratedColumn,
+    OneToOne
 } from "typeorm";
 import { Users } from '../../resources/users/entities/Users';
+import { BaseAbstractEntity } from './base/base.abstract.entity';
 
 @Index("userProbation_users_id_fk", ["userId"], {})
 @Entity("userProbation", { schema: "tslen" })
-export class UserProbation {
-  @PrimaryGeneratedColumn({ type: "int", name: "id" })
-      id: number;
+export class UserProbation extends BaseAbstractEntity<UserProbation>{
 
   @Column("int", { name: "userId", nullable: true })
       userId: number | null;
@@ -31,5 +29,5 @@ export class UserProbation {
       onUpdate: "CASCADE",
   })
   @JoinColumn([{ name: "userId", referencedColumnName: "id" }])
-      user: Users;
+  user: Users;
 }
