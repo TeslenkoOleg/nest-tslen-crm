@@ -18,7 +18,17 @@ export abstract class BaseAbstractService<T> implements BaseInterfaceService{
     }
 
     create (data: T): Promise<T> {
-        return this.baseAbstractRepository.create(data);
+        try {
+            if ('createOmeWithRelations' in this.currentRepository) {
+                return this.currentRepository.createOneWithRelations(data);
+            }
+            else {
+                return this.baseAbstractRepository.create(data);
+            }
+        } catch (e) {
+            this.logger.error(`create. Class: ${this.constructor.name} Message: ${e.message}`);
+            throw new NotFoundException(`Cannot create entity.`);
+        }
     }
 
     delete (id: number): Promise<T> {
@@ -36,7 +46,6 @@ export abstract class BaseAbstractService<T> implements BaseInterfaceService{
         } catch (e) {
             this.logger.error(`findAll. Class: ${this.constructor.name} Message: ${e.message}`);
             throw new NotFoundException(`Cannot find all entities.`);
-
         }
     }
 
