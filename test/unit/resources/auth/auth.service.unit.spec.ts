@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from '../../../../src/resources/auth/auth.service';
 import { UsersService } from '../../../../src/resources/users/users.service';
 import { UsersRepository } from '../../../../src/resources/users/users.repository';
-import { Users } from '../../../../src/resources/users/entities/Users';
+import { Users } from '../../../../src/resources/users/entities/users.entity';
 import { UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 const mockUser: Users = {

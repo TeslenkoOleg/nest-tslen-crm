@@ -6,7 +6,7 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
 } from "typeorm";
-import { Users } from '../../resources/users/entities/Users';
+import { Users } from '../../resources/users/entities/users.entity';
 
 @Index("userChiefRelation_users_null_fk", ["userId"], {})
 @Entity("userChiefRelation", { schema: "tslen" })

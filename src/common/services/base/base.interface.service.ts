@@ -1,6 +1,6 @@
 
 import { FindOptionsWhere } from 'typeorm';
-import { Users } from '../../../resources/users/entities/Users';
+import { Users } from '../../../resources/users/entities/users.entity';
 
 export interface BaseInterfaceService {
   create(data: any): Promise<any>;

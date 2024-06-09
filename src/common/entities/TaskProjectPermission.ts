@@ -7,7 +7,7 @@ import {
     PrimaryGeneratedColumn,
 } from "typeorm";
 import { TaskProject } from "./TaskProject";
-import { Users } from '../../resources/users/entities/Users';
+import { Users } from '../../resources/users/entities/users.entity';
 
 @Index("taskProjectPermission_taskProject_id_fk", ["projectId"], {})
 @Index("taskProjectPermission_users_id_fk", ["userId"], {})

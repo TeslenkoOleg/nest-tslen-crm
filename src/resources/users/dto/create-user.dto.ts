@@ -1,3 +1,3 @@
-import { Users } from '../entities/Users';
+import { Users } from '../entities/users.entity';
 
 export class CreateUserDto extends Users{}

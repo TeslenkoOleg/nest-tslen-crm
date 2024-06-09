@@ -1,6 +1,6 @@
 import { BaseAbstractRepository } from '../../repositories/base/base.abstract.repository';
 import { BaseInterfaceService } from './base.interface.service';
-import { Users } from '../../../resources/users/entities/Users';
+import { Users } from '../../../resources/users/entities/users.entity';
 import { Logger, NotFoundException } from '@nestjs/common';
 
 export abstract class BaseAbstractService<T> implements BaseInterfaceService{
@@ -19,7 +19,7 @@ export abstract class BaseAbstractService<T> implements BaseInterfaceService{
 
     create (data: T): Promise<T> {
         try {
-            if ('createOmeWithRelations' in this.currentRepository) {
+            if ('createOneWithRelations' in this.currentRepository) {
                 return this.currentRepository.createOneWithRelations(data);
             }
             else {

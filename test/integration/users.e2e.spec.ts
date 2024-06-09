@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common/interfaces/nest-application.int
 import { Test } from '@nestjs/testing/test';
 import { UsersService } from '../../src/resources/users/users.service';
 import * as request from 'supertest';
-import { Users } from '../../src/resources/users/entities/Users';
+import { Users } from '../../src/resources/users/entities/users.entity';
 import { AuthGuard } from '../../src/resources/auth/guards/auth.guard';
 import { ExecutionContext } from '@nestjs/common/interfaces/features/execution-context.interface';
 import { UsersController } from '../../src/resources/users/users.controller';

@@ -6,7 +6,7 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
 } from "typeorm";
-import { Companies } from "./Companies";
+import { Companies } from "../../../common/entities/Companies";
 
 @Index("companyDaysOffRules_companyId_id_fk", ["companyId"], {})
 @Entity("companyDaysOffRules", { schema: "tslen" })

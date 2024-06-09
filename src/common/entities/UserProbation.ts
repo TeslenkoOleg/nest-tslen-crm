@@ -5,7 +5,7 @@ import {
     JoinColumn,
     OneToOne
 } from "typeorm";
-import { Users } from '../../resources/users/entities/Users';
+import { Users } from '../../resources/users/entities/users.entity';
 import { BaseAbstractEntity } from './base/base.abstract.entity';
 
 @Index("userProbation_users_id_fk", ["userId"], {})

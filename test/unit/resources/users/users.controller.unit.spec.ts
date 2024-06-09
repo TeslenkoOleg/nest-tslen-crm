@@ -2,7 +2,7 @@
 import { UsersController } from '../../../../src/resources/users/users.controller';
 import { TestBed } from '@automock/jest';
 import { UsersService } from '../../../../src/resources/users/users.service';
-import { Users } from '../../../../src/resources/users/entities/Users';
+import { Users } from '../../../../src/resources/users/entities/users.entity';
 
 describe('UsersController', () => {
     let controller: UsersController;
