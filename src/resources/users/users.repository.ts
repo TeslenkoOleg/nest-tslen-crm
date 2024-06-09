@@ -1,15 +1,18 @@
 import { BaseAbstractRepository } from '../../common/repositories/base/base.abstract.repository';
-import { Users } from './entities/Users';
+import { Users } from './entities/users.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EntityManager, getRepository, Repository } from 'typeorm';
-import { UserRelationToGroup } from './entities/UserRelationToGroup';
+import { EntityManager, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
+import { CompanyDaysOffRules } from '../company-days-off-rules/entities/company-days-off-rules.entity';
+import { DaysOff } from '../../common/entities/DaysOff';
 
 export class UsersRepository extends BaseAbstractRepository<Users>{
     constructor (
     @InjectRepository(Users)
     private readonly usersRepository: Repository<Users>,
-    private entityManager: EntityManager
+    private entityManager: EntityManager,
+    @InjectRepository(CompanyDaysOffRules)
+    private readonly companyDaysOffRulesRepository: Repository<CompanyDaysOffRules>,
     ) {
         super(usersRepository);
     }
@@ -62,24 +65,16 @@ export class UsersRepository extends BaseAbstractRepository<Users>{
         return await qb.getMany();
     }
     async createOneWithRelations (creteUserDto: CreateUserDto): Promise<Users> {
-        const user = new Users(creteUserDto);
-        await this.entityManager.save(user);
-        return user;
-        // const userDaysOffRepository = getRepository('DaysOff');
-        // if (!data.id) { // create companyDaysOffRules if new user
-        //     const companyDaysOffRulesRepository = getRepository('CompanyDaysOffRules');
-        //     const companyDaysOffRules = await companyDaysOffRulesRepository.findOne({where: {companyId: user.companyId}});
-        //
-        //     let userDaysOff = Object.assign(new DaysOff(), companyDaysOffRules);
-        //     userDaysOff.userId = userId;
-        //     userDaysOff.id = null;
-        //
-        //     await userDaysOffRepository.save(userDaysOff);
-        // } else { // update userDaysOff if user exist
-        //     let userDaysOff = Object.assign(new DaysOff(), oldData.daysOff);
-        //     await userDaysOffRepository.save(userDaysOff);
-        // }
-        // return user;
+        return await this.entityManager.transaction(async transactionalEntityManager => {
+            const user: Users = new Users(creteUserDto);
+            await transactionalEntityManager.save(user);
+
+            const companyDaysOffRules: CompanyDaysOffRules = await this.companyDaysOffRulesRepository.findOneBy({ companyId: user.companyId });
+            const userDaysOff: DaysOff = Object.assign(new DaysOff(), companyDaysOffRules);
+            userDaysOff.userId = user.id;
+            await transactionalEntityManager.save(userDaysOff);
+            return user;
+        });
     }
     public convertDateWithoutTimezoneOffset (date: Date): any {
         const year = date.getFullYear();

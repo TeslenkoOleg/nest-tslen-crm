@@ -7,7 +7,7 @@ import {
     PrimaryGeneratedColumn,
 } from "typeorm";
 import { UsersGroup } from "./UsersGroup";
-import { Users } from './Users';
+import { Users } from './users.entity';
 import { BaseAbstractEntity } from '../../../common/entities/base/base.abstract.entity';
 
 @Index("userRelationToGroup_users_null_fk", ["userId"], {})

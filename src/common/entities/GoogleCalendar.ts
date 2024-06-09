@@ -6,7 +6,7 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
 } from "typeorm";
-import { Users } from '../../resources/users/entities/Users';
+import { Users } from '../../resources/users/entities/users.entity';
 
 @Index("googleCalendar_users_id_fk", ["userId"], {})
 @Entity("googleCalendar", { schema: "tslen" })

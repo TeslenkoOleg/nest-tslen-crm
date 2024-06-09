@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Users } from './entities/Users';
+import { Users } from './entities/users.entity';
 import { UserRelationToGroup } from './entities/UserRelationToGroup';
 import { UsersGroup } from './entities/UsersGroup';
 import { Companies } from '../../common/entities/Companies';
-import { CompanyDaysOffRules } from '../../common/entities/CompanyDaysOffRules';
+import { CompanyDaysOffRules } from '../company-days-off-rules/entities/company-days-off-rules.entity';
 import { DaysOffScheduler } from '../../common/entities/DaysOffScheduler';
 import { DaysOff } from '../../common/entities/DaysOff';
 import { EventsByUser } from '../../common/entities/EventsByUser';
@@ -16,6 +16,8 @@ import { UsersRepository } from './users.repository';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
+import { CompanyDaysOffRulesService } from '../company-days-off-rules/company-days-off-rules.service';
+import { CompanyDaysOffRulesModule } from '../company-days-off-rules/company-days-off-rules.module';
 
 @Module({
 
@@ -30,12 +32,13 @@ import { JwtService } from '@nestjs/jwt';
         EventsByUser,
         UserChiefRelation,
         UserProbation
-    ])],
+    ])
+    ],
     controllers: [UsersController],
     providers: [
         UsersService,
         UsersRepository,
-        JwtService,
+        JwtService
     ],
     exports: [UsersService]
 })

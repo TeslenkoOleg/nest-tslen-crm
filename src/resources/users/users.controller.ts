@@ -1,6 +1,6 @@
 import { Controller, Get, Request, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { Users } from './entities/Users';
+import { Users } from './entities/users.entity';
 import { OneNumberParams } from '../../common/dto/oneNumberParams';
 import { User } from './decorators/user.decorator';
 import { UpdateUserDto } from './dto/update-user.dto';

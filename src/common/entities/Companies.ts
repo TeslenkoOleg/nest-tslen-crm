@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { UsersGroup } from "../../resources/users/entities/UsersGroup";
-import { CompanyDaysOffRules } from "./CompanyDaysOffRules";
+import { CompanyDaysOffRules } from "../../resources/company-days-off-rules/entities/company-days-off-rules.entity";
 import { DaysOffScheduler } from "./DaysOffScheduler";
 
 @Entity("companies", { schema: "tslen" })

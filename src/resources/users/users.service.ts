@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Users } from './entities/Users';
+import { Users } from './entities/users.entity';
 import * as bcrypt from 'bcrypt';
 import { UsersRepository } from './users.repository';
 import { BaseAbstractService } from '../../common/services/base/base.abstract.service';
@@ -9,7 +9,7 @@ import { BaseInterfaceService } from '../../common/services/base/base.interface.
 export class UsersService extends BaseAbstractService<Users> implements BaseInterfaceService{
     protected currentRepository: UsersRepository;
     constructor (
-    private readonly repository: UsersRepository,
+    protected readonly repository: UsersRepository,
     ) {
         super(repository);
         this.currentRepository = repository;
