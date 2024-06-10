@@ -2,6 +2,7 @@ import { BaseAbstractRepository } from '../../repositories/base/base.abstract.re
 import { BaseInterfaceService } from './base.interface.service';
 import { Users } from '../../../resources/users/entities/users.entity';
 import { Logger, NotFoundException } from '@nestjs/common';
+import { DeepPartial } from 'typeorm';
 
 export abstract class BaseAbstractService<T> implements BaseInterfaceService{
     protected readonly currentRepository: any;
@@ -35,7 +36,7 @@ export abstract class BaseAbstractService<T> implements BaseInterfaceService{
         return Promise.resolve(undefined);
     }
 
-    findAll (user: Users): Promise<T[]> {
+    async findAll (user: Users): Promise<T[]> {
         try {
             if ('getByRole' in this.currentRepository) {
                 return this.currentRepository.getByRole(user);
@@ -65,7 +66,24 @@ export abstract class BaseAbstractService<T> implements BaseInterfaceService{
         }
     }
 
-    update (data: T): Promise<T> {
-        return Promise.resolve(undefined);
+    async update (id: number, data: DeepPartial<T>): Promise<T> {
+        const entity: T = await this.baseAbstractRepository.findOne(id);
+        if (!entity) {
+            this.logger.error(`update. Class: ${this.constructor.name} Message: Cannot find an entity for ${id}`);
+            throw new NotFoundException(`Cannot find an entity for ${id}`);
+        }
+
+        const entityData: DeepPartial<T> = Object.assign(entity, data);
+        try {
+            if ('updateOneWithRelations' in this.currentRepository) {
+                return this.currentRepository.updateOneWithRelations(entityData);
+            }
+            else {
+                return this.baseAbstractRepository.save(entityData);
+            }
+        } catch (e) {
+            this.logger.error(`update. Class: ${this.constructor.name} Message: ${e.message}`);
+            throw new NotFoundException(`Cannot update the entity.`);
+        }
     }
 }

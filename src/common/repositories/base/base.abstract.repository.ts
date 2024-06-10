@@ -7,7 +7,7 @@ export abstract class BaseAbstractRepository<T> implements BaseInterfaceReposito
         this.repository = entity;
     }
 
-    findOne (id: number | string): Promise<T> {
+    findOne (id: number): Promise<T> {
         return this.repository.findOne({ where: { id } as unknown as FindOptionsWhere<T> });
     }
     async create (data: DeepPartial<T>): Promise<T> {
@@ -18,8 +18,8 @@ export abstract class BaseAbstractRepository<T> implements BaseInterfaceReposito
         return Promise.resolve(false);
     }
 
-    findAll (): Promise<T[]> {
-        return this.repository.find();
+    public async findAll (): Promise<T[]> {
+        return await this.repository.find();
     }
 
     public async findOneByCondition (options: FindOptionsWhere<T>): Promise<T> {
@@ -34,8 +34,8 @@ export abstract class BaseAbstractRepository<T> implements BaseInterfaceReposito
         return await this.repository.save(data);
     }
 
-    update (data: DeepPartial<T>): T {
-        return undefined;
+    async update (id: number, data: DeepPartial<T>): Promise<T> {
+        return await this.repository.save(data)
     }
 
 }

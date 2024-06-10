@@ -29,5 +29,5 @@ export class UserProbation extends BaseAbstractEntity<UserProbation>{
       onUpdate: "CASCADE",
   })
   @JoinColumn([{ name: "userId", referencedColumnName: "id" }])
-  user: Users;
+      user: Users;
 }

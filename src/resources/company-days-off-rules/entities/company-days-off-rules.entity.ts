@@ -7,12 +7,11 @@ import {
     PrimaryGeneratedColumn,
 } from "typeorm";
 import { Companies } from "../../../common/entities/Companies";
+import { BaseAbstractEntity } from '../../../common/entities/base/base.abstract.entity';
 
 @Index("companyDaysOffRules_companyId_id_fk", ["companyId"], {})
 @Entity("companyDaysOffRules", { schema: "tslen" })
-export class CompanyDaysOffRules {
-  @PrimaryGeneratedColumn({ type: "int", name: "id" })
-      id: number;
+export class CompanyDaysOffRules extends BaseAbstractEntity<CompanyDaysOffRules>{
 
   @Column("int", { name: "companyId" })
       companyId: number;

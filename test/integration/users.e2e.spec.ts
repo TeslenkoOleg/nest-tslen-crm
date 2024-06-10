@@ -21,7 +21,7 @@ describe('UsersController (e2e)', () => {
         req.user = mockedUserObject;
         return true;
     } };
-    let usersController: UsersController;
+    // let usersController: UsersController;
     beforeEach(async () => {
         const moduleFixture: TestingModule = await Test
             .createTestingModule({
@@ -38,7 +38,7 @@ describe('UsersController (e2e)', () => {
             .overrideGuard(AuthGuard).useValue(mockedAuthGuard)
             .compile();
 
-        usersController = moduleFixture.get<UsersController>(UsersController);
+        // usersController = moduleFixture.get<UsersController>(UsersController);
         app = moduleFixture.createNestApplication();
         await app.init();
     });

@@ -16,8 +16,6 @@ import { UsersRepository } from './users.repository';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { CompanyDaysOffRulesService } from '../company-days-off-rules/company-days-off-rules.service';
-import { CompanyDaysOffRulesModule } from '../company-days-off-rules/company-days-off-rules.module';
 
 @Module({
 

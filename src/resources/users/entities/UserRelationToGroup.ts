@@ -3,8 +3,7 @@ import {
     Entity,
     Index,
     JoinColumn,
-    ManyToOne,
-    PrimaryGeneratedColumn,
+    ManyToOne
 } from "typeorm";
 import { UsersGroup } from "./UsersGroup";
 import { Users } from './users.entity';

@@ -7,13 +7,12 @@ import {
     PrimaryGeneratedColumn,
 } from "typeorm";
 import { Users } from '../../resources/users/entities/users.entity';
+import { BaseAbstractEntity } from './base/base.abstract.entity';
 
 
 @Index("daysOff_users_null_fk", ["userId"], {})
 @Entity("daysOff", { schema: "tslen" })
-export class DaysOff {
-  @PrimaryGeneratedColumn({ type: "int", name: "id" })
-      id: number;
+export class DaysOff extends BaseAbstractEntity<DaysOff>{
 
   @Column("int", { name: "userId", nullable: true })
       userId: number | null;
