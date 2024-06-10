@@ -68,7 +68,6 @@ describe('AuthService signIn', () => {
         if (!isMatchedPassword) {
             error = new UnauthorizedException(); // The line you want to test
         }
-        //
         expect(error).toBeInstanceOf(UnauthorizedException);
         fail('UnauthorizedException not thrown'); // If we reach this point, the test failed
     });
