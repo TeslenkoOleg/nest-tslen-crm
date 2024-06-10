@@ -3,8 +3,7 @@ import {
     Entity,
     Index,
     JoinColumn,
-    ManyToOne,
-    PrimaryGeneratedColumn,
+    ManyToOne
 } from "typeorm";
 import { Users } from '../../resources/users/entities/users.entity';
 import { BaseAbstractEntity } from './base/base.abstract.entity';

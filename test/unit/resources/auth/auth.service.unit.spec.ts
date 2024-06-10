@@ -64,16 +64,12 @@ describe('AuthService signIn', () => {
 
         const isMatchedPassword = await userService.compareHashedValues(value, hashedValue);
         expect(isMatchedPassword).toBe(false);
-
-        try {
-            // This is where the code that checks the password would be
-            if (!isMatchedPassword) {
-                throw new UnauthorizedException(); // The line you want to test
-            }
-            fail('UnauthorizedException not thrown'); // If we reach this point, the test failed
-        } catch (e) {
-            expect(e).toBeInstanceOf(UnauthorizedException); // Check that the exception thrown is UnauthorizedException
+        let error: UnauthorizedException;
+        if (!isMatchedPassword) {
+            error = new UnauthorizedException(); // The line you want to test
         }
+        expect(error).toBeInstanceOf(UnauthorizedException);
+        fail('UnauthorizedException not thrown'); // If we reach this point, the test failed
     });
 });
 

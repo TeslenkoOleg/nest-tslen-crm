@@ -34,8 +34,4 @@ export abstract class BaseAbstractRepository<T> implements BaseInterfaceReposito
         return await this.repository.save(data);
     }
 
-    async update (id: number, data: DeepPartial<T>): Promise<T> {
-        return await this.repository.save(data)
-    }
-
 }

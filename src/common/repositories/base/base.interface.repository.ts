@@ -2,7 +2,6 @@ import { DeepPartial, FindManyOptions } from 'typeorm';
 
 export interface BaseInterfaceRepository<T> {
     create(data: DeepPartial<T>): Promise<T>;
-    update(id: number, data: DeepPartial<T>): Promise<T>;
     save(data: T): Promise<T>;
     delete(id: number): Promise<boolean>;
     findAll(): Promise<T[]>;
