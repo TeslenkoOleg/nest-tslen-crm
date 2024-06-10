@@ -17,7 +17,7 @@ export class UsersRepository extends BaseAbstractRepository<Users>{
         super(usersRepository);
     }
 
-    public async getOneWithRelations (id: number, user: Users) {
+    public async getOneWithRelations (id: number, user: Users): Promise<Users> {
         const companyId: number = user.companyId;
         const userRole: string = user.role;
         let userId: number = user.id;
@@ -47,7 +47,7 @@ export class UsersRepository extends BaseAbstractRepository<Users>{
 
         return result
     }
-    public async getByRole (user: Users, id: number = null,) {
+    public async getByRole (user: Users, id: number = null): Promise<Users[] | Users> {
         const qb = this.usersRepository.createQueryBuilder('user');
         const companyId: number = user.companyId;
 
@@ -70,7 +70,7 @@ export class UsersRepository extends BaseAbstractRepository<Users>{
             await transactionalEntityManager.save(user);
 
             const companyDaysOffRules: CompanyDaysOffRules = await this.companyDaysOffRulesRepository.findOneBy({ companyId: user.companyId });
-            const userDaysOff: DaysOff = Object.assign(new DaysOff(), companyDaysOffRules);
+            const userDaysOff: DaysOff = Object.assign(new DaysOff({}), companyDaysOffRules);
             userDaysOff.userId = user.id;
             await transactionalEntityManager.save(userDaysOff);
             return user;

@@ -2,44 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from '../../../../src/resources/auth/auth.service';
 import { UsersService } from '../../../../src/resources/users/users.service';
 import { UsersRepository } from '../../../../src/resources/users/users.repository';
-import { Users } from '../../../../src/resources/users/entities/users.entity';
 import { UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-const mockUser: Users = {
-    address: '',
-    avatar: '',
-    birthDay: undefined,
-    chiefId: 0,
-    company: '',
-    companyId: 0,
-    country: '',
-    daysOff: [],
-    emailSpare: '',
-    eventsByUsers: [],
-    eventsByUsersRequest: [],
-    firstDayInCompany: undefined,
-    firstName: '',
-    googleCalendars: undefined,
-    isActive: 0,
-    jobPosition: '',
-    jobPositionDetails: [],
-    lastDayInCompany: undefined,
-    lastLogin: undefined,
-    lastName: '',
-    loginCount: 0,
-    mentorId: 0,
-    password: '',
-    phone: '',
-    role: undefined,
-    skype: '',
-    taskProjectPermissions: [],
-    tokenActivation: '',
-    tokenReset: '',
-    userChiefRelations: [],
-    userChiefRelationsByChief: [],
-    userProbation: undefined,
-    userRelationToGroups: [],
-    id: 1, email: 'test@gmail.com' };
+import { mockUser } from '../../../shared/users';
 
 describe('AuthService signIn', () => {
     let authService: AuthService;
@@ -99,16 +64,13 @@ describe('AuthService signIn', () => {
 
         const isMatchedPassword = await userService.compareHashedValues(value, hashedValue);
         expect(isMatchedPassword).toBe(false);
-
-        try {
-            // This is where the code that checks the password would be
-            if (!isMatchedPassword) {
-                throw new UnauthorizedException(); // The line you want to test
-            }
-            fail('UnauthorizedException not thrown'); // If we reach this point, the test failed
-        } catch (e) {
-            expect(e).toBeInstanceOf(UnauthorizedException); // Check that the exception thrown is UnauthorizedException
+        let error: UnauthorizedException;
+        if (!isMatchedPassword) {
+            error = new UnauthorizedException(); // The line you want to test
         }
+        //
+        expect(error).toBeInstanceOf(UnauthorizedException);
+        fail('UnauthorizedException not thrown'); // If we reach this point, the test failed
     });
 });
 

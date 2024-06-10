@@ -36,8 +36,26 @@ describe('UsersController', () => {
 
         jest.spyOn(userService, 'findOneById').mockResolvedValue(mockResponse as Users);
 
-        const result = await controller.findOne({} as Users, { id: 1 });
+        const result = await controller.findOne({} as Users, 1);
         expect(userService.findOneById).toHaveBeenCalled();
+        expect(result).toEqual(mockResponse);
+    })
+    it('should call userService.create', async () => {
+        const mockResponse: Partial<Users> = { id: 1, firstName: 'John', lastName: 'Doe', email: 'test' };
+
+        jest.spyOn(userService, 'create').mockResolvedValue(mockResponse as Users);
+
+        const result = await controller.create(mockUser);
+        expect(userService.create).toHaveBeenCalled();
+        expect(result).toEqual(mockResponse);
+    });
+    it ('should call userService.update', async () => {
+        const mockResponse: Partial<Users> = mockUser;
+
+        jest.spyOn(userService, 'update').mockResolvedValue(mockResponse as Users);
+
+        const result = await controller.update(1, mockUser);
+        expect(userService.update).toHaveBeenCalled();
         expect(result).toEqual(mockResponse);
     })
     it('should call userService.create', async () => {
