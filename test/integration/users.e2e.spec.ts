@@ -33,7 +33,9 @@ describe('UsersController (e2e)', () => {
                         useValue: {
                             findAll: jest.fn(() => mockedUsers),
                             findOne: jest.fn(() => mockedUsers[0]),
-                            getOneWithRelations: jest.fn(() => mockedUsers[0])
+                            getOneWithRelations: jest.fn(() => mockedUsers[0]),
+                            getBirthdayAnniversary: jest.fn(() => mockedUsers[0]),
+                            getUsersWithRelationsByDateRange: jest.fn(() => mockedUsers),
                         },
                     },
                 ],
@@ -78,10 +80,22 @@ describe('UsersController (e2e)', () => {
     it('/birthday-anniversary (GET)', async () => {
         const mockUser = { id: 1, firstName: 'John', lastName: 'Doe' };
         await request(app.getHttpServer())
-            .get('/birthday-anniversary')
+            .get('/users/birthday-anniversary')
             .expect(200)
             .expect(({ body }) => {
                 expect(body).toEqual(mockUser);
+            });
+    });
+    it('/users/get-with-relations-by-date-range (GET)', async () => {
+        const mockUsers: Partial<Users>[] = [
+            { id: 1, firstName: 'John', lastName: 'Doe' },
+            { id: 2, firstName: 'Jane', lastName: 'Doe' },
+        ]
+        await request(app.getHttpServer())
+            .get('/users/get-with-relations-by-date-range')
+            .expect(200)
+            .expect(({ body }) => {
+                expect(body).toEqual(mockUsers);
             });
     });
 });
