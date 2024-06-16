@@ -6,7 +6,7 @@ import { DeepPartial } from 'typeorm';
 
 export abstract class BaseAbstractService<T> implements BaseInterfaceService{
     protected readonly currentRepository: any;
-    private readonly logger = new Logger(this.constructor.name);
+    protected readonly logger = new Logger(this.constructor.name);
     protected constructor (private readonly baseAbstractRepository: BaseAbstractRepository<T>) { }
 
     findOneByCondition (options: any): Promise<T> {

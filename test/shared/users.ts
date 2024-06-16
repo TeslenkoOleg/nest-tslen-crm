@@ -6,7 +6,7 @@ export const mockUser: Users = {
     birthDay: undefined,
     chiefId: 0,
     company: '',
-    companyId: 0,
+    companyId: 4,
     country: '',
     daysOff: [],
     emailSpare: '',

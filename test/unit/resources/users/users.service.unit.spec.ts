@@ -1,5 +1,6 @@
 import { TestBed } from '@automock/jest';
 import { UsersService } from '../../../../src/resources/users/users.service';
+import { mockUser } from '../../../shared/users';
 
 describe('Users Service Unit Test', () => {
     let userService: UsersService;
@@ -27,5 +28,19 @@ describe('Users Service Unit Test', () => {
 
         const result = await userService.compareHashedValues(value, hashedValue);
         expect(result).toEqual(true);
+    });
+    it('should get birthday anniversary', async () => {
+        const result = mockUser;
+        jest.spyOn(userService, 'getBirthdayAnniversary').mockResolvedValue(mockUser);
+
+        const res = await userService.getBirthdayAnniversary(mockUser);
+        expect(res).toEqual(result);
+    });
+    it('should get users with relations by date range', async () => {
+        const result = [mockUser];
+        jest.spyOn(userService, 'getUsersWithRelationsByDateRange').mockResolvedValue([mockUser]);
+
+        const res = await userService.getUsersWithRelationsByDateRange(mockUser, { startDate: new Date(), endDate: new Date() });
+        expect(res).toEqual(result);
     });
 });

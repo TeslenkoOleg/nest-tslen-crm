@@ -9,10 +9,7 @@ async function bootstrap () {
     const app = await NestFactory.create(AppModule);
     const isProduction = app.get(ConfigService).get('MODE') === 'PROD';
     app.setGlobalPrefix('/api/v' + app.get(ConfigService).get('API_VERSION')); // Setting base path
-    app.useGlobalPipes(new ValidationPipe(
-        {
-            transform: true,
-        }
+    app.useGlobalPipes(new ValidationPipe({ transform: true }
     ));
     // interceptors
     app.useGlobalInterceptors(new TimeoutInterceptor());

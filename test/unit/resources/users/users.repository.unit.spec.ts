@@ -1,4 +1,4 @@
-import { EntityManager, Repository } from 'typeorm';
+import { EntityManager } from 'typeorm';
 import {
     CompanyDaysOffRules
 } from '../../../../src/resources/company-days-off-rules/entities/company-days-off-rules.entity';
@@ -77,6 +77,22 @@ describe('UsersRepository', () => {
         jest.spyOn(repository, 'convertDateWithoutTimezoneOffset').mockResolvedValue(mockResponse);
         const result = await repository.convertDateWithoutTimezoneOffset(date);
         expect(repository.convertDateWithoutTimezoneOffset).toHaveBeenCalled();
+        expect(result).toEqual(mockResponse);
+    });
+    it('should call getUsersWithRelationsByDateRange', async () => {
+        const startDate = new Date('2021-01-01T00:00:00.000Z');
+        const endDate = new Date('2021-01-02T00:00:00.000Z');
+        const mockResponse: Partial<Users>[] = [mockUser];
+        jest.spyOn(repository, 'getUsersWithRelationsByDateRange').mockResolvedValue(mockResponse as Users[]);
+        const result = await repository.getUsersWithRelationsByDateRange(mockUser, { startDate, endDate });
+        expect(repository.getUsersWithRelationsByDateRange).toHaveBeenCalled();
+        expect(result).toEqual(mockResponse);
+    });
+    it('should call getBirthdayAnniversary', async () => {
+        const mockResponse: Partial<Users> = mockUser;
+        jest.spyOn(repository, 'getBirthdayAnniversary').mockResolvedValue(mockResponse as Users);
+        const result = await repository.getBirthdayAnniversary(mockUser);
+        expect(repository.getBirthdayAnniversary).toHaveBeenCalled();
         expect(result).toEqual(mockResponse);
     });
 });

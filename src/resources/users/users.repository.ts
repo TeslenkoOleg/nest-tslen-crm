@@ -1,7 +1,7 @@
 import { BaseAbstractRepository } from '../../common/repositories/base/base.abstract.repository';
 import { Users } from './entities/users.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EntityManager, Repository } from 'typeorm';
+import { EntityManager, Repository, SelectQueryBuilder } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { CompanyDaysOffRules } from '../company-days-off-rules/entities/company-days-off-rules.entity';
 import { DaysOff } from '../../common/entities/DaysOff';
@@ -86,5 +86,35 @@ export class UsersRepository extends BaseAbstractRepository<Users>{
 
         return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     }
+    public async getBirthdayAnniversary (user: Users): Promise<Users> {
+        const qb: SelectQueryBuilder<Users> = this.usersRepository.createQueryBuilder('user');
+        const companyId: number = user.companyId;
+        const q1: string = qb.select('concat(firstName, \' \', lastName) as name, avatar, \'birthday\' as type, birthDay as day')
+            .where(`companyId = ${companyId}`)
+            .andWhere("DATE_FORMAT(birthDay, '%m-%d') BETWEEN DATE_FORMAT(NOW(), '%m-%d') AND DATE_FORMAT(NOW() + INTERVAL 30 DAY, '%m-%d')")
+            .getQuery();
 
+        const q2: string = qb.select('concat(firstName, \' \', lastName) as name, avatar, \'anniversary\' as type, firstDayInCompany as day')
+            .where(`companyId = ${companyId}`)
+            .andWhere("DATE_FORMAT(firstDayInCompany, '%m-%d') BETWEEN DATE_FORMAT(NOW(), '%m-%d') AND DATE_FORMAT(NOW() + INTERVAL 30 DAY, '%m-%d')")
+            .andWhere('DATE_FORMAT(firstDayInCompany, "%Y") != DATE_FORMAT(NOW(), "%Y")')
+            .getQuery();
+        return await this.entityManager.query(`${q1} UNION ${q2}`);
+    }
+    public async getUsersWithRelationsByDateRange (user: Users, { startDate, endDate }): Promise<Users[]> {
+        const qb: SelectQueryBuilder<Users> = this.usersRepository.createQueryBuilder('user');
+        const companyId = user.companyId;
+        qb.select();
+        qb.where("companyId = :companyId", { companyId: companyId })
+            .leftJoinAndSelect('user.eventsByUsers', 'eventsByUsers',
+                `eventsByUsers.approved = 1 
+                          and eventsByUsers.isGoogleEvent = 0
+                          and (eventsByUsers.start BETWEEN '${startDate}' AND '${endDate}'
+                          or eventsByUsers.end BETWEEN '${startDate}' AND '${endDate}')`)
+            .leftJoinAndSelect('user.userProbation', 'userProbation',
+                `(userProbation.start BETWEEN '${startDate}' AND '${endDate}'
+                          or userProbation.end BETWEEN '${startDate}' AND '${endDate}')`)
+        qb.orderBy('user.id', "DESC")
+        return await qb.getMany();
+    }
 }

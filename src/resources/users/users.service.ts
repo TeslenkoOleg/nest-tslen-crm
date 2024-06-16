@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Users } from './entities/users.entity';
 import * as bcrypt from 'bcrypt';
 import { UsersRepository } from './users.repository';
 import { BaseAbstractService } from '../../common/services/base/base.abstract.service';
 import { BaseInterfaceService } from '../../common/services/base/base.interface.service';
+import { DatesRangeDto } from '../../common/dto/dates-range.dto';
 
 @Injectable()
 export class UsersService extends BaseAbstractService<Users> implements BaseInterfaceService{
@@ -21,6 +22,20 @@ export class UsersService extends BaseAbstractService<Users> implements BaseInte
     async compareHashedValues (value: string, hashedValue: string): Promise<boolean> {
         return bcrypt.compare(value, hashedValue);
     }
-
-
+    public async getBirthdayAnniversary (user: Users): Promise<Users> {
+        try {
+            return await this.currentRepository.getBirthdayAnniversary(user);
+        } catch (err) {
+            this.logger.error(`getBirthdayAnniversary: ${user.id}, class: ${this.constructor.name}. Message: ${err.message}`);
+            throw new NotFoundException(`Cannot get birthday anniversary for user: ${user.id}`);
+        }
+    }
+    public async getUsersWithRelationsByDateRange (user: Users, dateParams: DatesRangeDto): Promise<Users[]> {
+        try {
+            return await this.currentRepository.getUsersWithRelationsByDateRange(user, dateParams);
+        } catch (err) {
+            this.logger.error(`getUsersWithRelationsByDateRange: ${user.id}, class: ${this.constructor.name}. Message: ${err.message}`);
+            throw new NotFoundException(`Cannot get users with relations by date range for user: ${user.id}`);
+        }
+    }
 }
