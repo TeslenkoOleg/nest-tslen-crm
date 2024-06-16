@@ -23,7 +23,7 @@ import { AuthGuard } from './guards/auth.guard';
     controllers: [AuthController],
     providers: [
         AuthService,
-        // { provide: APP_GUARD, useClass: AuthGuard }
+        { provide: APP_GUARD, useClass: AuthGuard }
     ],
 })
 export class AuthModule {}

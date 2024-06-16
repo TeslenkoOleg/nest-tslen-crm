@@ -67,4 +67,24 @@ describe('UsersController', () => {
         expect(userService.create).toHaveBeenCalled();
         expect(result).toEqual(mockResponse);
     });
+    it ('should call userService.getBirthdayAnniversary', async () => {
+        const mockResponse: Partial<Users> = mockUser;
+
+        jest.spyOn(userService, 'getBirthdayAnniversary').mockResolvedValue(mockResponse as Users);
+
+        const result = await controller.getBirthdayAnniversary(mockUser);
+        expect(userService.getBirthdayAnniversary).toHaveBeenCalled();
+        expect(result).toEqual(mockResponse);
+    })
+    it('should call userService.getUsersWithRelationsByDateRange', async () => {
+        const mockResponse: Partial<Users>[] = [
+            { id: 1, firstName: 'John', lastName: 'Doe', email: 'test' },
+        ];
+
+        jest.spyOn(userService, 'getUsersWithRelationsByDateRange').mockResolvedValue(mockResponse as Users[]);
+
+        const result = await controller.readAllFromByDateRange(mockUser, { startDate: new Date(), endDate: new Date() });
+        expect(userService.getUsersWithRelationsByDateRange).toHaveBeenCalled();
+        expect(result).toEqual(mockResponse);
+    });
 });

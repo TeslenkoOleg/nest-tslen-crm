@@ -8,6 +8,7 @@ import { ExecutionContext } from '@nestjs/common/interfaces/features/execution-c
 import { UsersController } from '../../src/resources/users/users.controller';
 import { TestingModule } from '@nestjs/testing/testing-module';
 import { UsersRepository } from '../../src/resources/users/users.repository';
+import { mockUser } from '../shared/users';
 
 describe('UsersController (e2e)', () => {
     let app: INestApplication;
@@ -15,7 +16,7 @@ describe('UsersController (e2e)', () => {
         { id: 1, firstName: 'John', lastName: 'Doe' },
         { id: 2, firstName: 'Jane', lastName: 'Doe' },
     ]
-    const mockedUserObject = { id: 1, email: '' };
+    const mockedUserObject = mockUser;
     const mockedAuthGuard = { canActivate: (context: ExecutionContext) => {
         const req = context.switchToHttp().getRequest();
         req.user = mockedUserObject;
@@ -31,6 +32,8 @@ describe('UsersController (e2e)', () => {
                         provide: UsersRepository,
                         useValue: {
                             findAll: jest.fn(() => mockedUsers),
+                            findOne: jest.fn(() => mockedUsers[0]),
+                            getOneWithRelations: jest.fn(() => mockedUsers[0])
                         },
                     },
                 ],
@@ -63,5 +66,22 @@ describe('UsersController (e2e)', () => {
                 expect(body).toEqual(mockUsers);
             });
     });
-
+    it('/users/:id (GET)', async () => {
+        const mockUser = { id: 1, firstName: 'John', lastName: 'Doe' };
+        await request(app.getHttpServer())
+            .get('/users/1')
+            .expect(200)
+            .expect(({ body }) => {
+                expect(body).toEqual(mockUser);
+            });
+    });
+    it('/birthday-anniversary (GET)', async () => {
+        const mockUser = { id: 1, firstName: 'John', lastName: 'Doe' };
+        await request(app.getHttpServer())
+            .get('/birthday-anniversary')
+            .expect(200)
+            .expect(({ body }) => {
+                expect(body).toEqual(mockUser);
+            });
+    });
 });
