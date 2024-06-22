@@ -3,31 +3,38 @@ import { BaseInterfaceService } from './base.interface.service';
 import { Users } from '../../../resources/users/entities/users.entity';
 import { Logger, NotFoundException } from '@nestjs/common';
 import { DeepPartial } from 'typeorm';
+import { SlackService } from '../slack/slack.service';
 
 export abstract class BaseAbstractService<T> implements BaseInterfaceService{
     protected readonly currentRepository: any;
     protected readonly logger = new Logger(this.constructor.name);
-    protected constructor (private readonly baseAbstractRepository: BaseAbstractRepository<T>) { }
+    protected constructor (
+      private readonly baseAbstractRepository: BaseAbstractRepository<T>,
+      protected readonly slackService: SlackService
+    ) { }
 
-    findOneByCondition (options: any): Promise<T> {
+    async findOneByCondition (options: any): Promise<T> {
         try {
             return this.baseAbstractRepository.findOneByCondition(options);
         } catch (e) {
-            this.logger.error(`findOneByCondition: ${JSON.stringify(options)}, class: ${this.constructor.name}. Message: ${e.message}`);
+            const errorMessage = `findOneByCondition: ${JSON.stringify(options)}, class: ${this.constructor.name}. Message: ${e.message}`;
+            this.logger.error(errorMessage);
+            await this.slackService.sendError(errorMessage);
             throw new NotFoundException(`Cannot find the entity for - ${JSON.stringify(options)}`);
         }
     }
 
-    create (data: T): Promise<T> {
+    async create (data: T): Promise<T> {
         try {
             if ('createOneWithRelations' in this.currentRepository) {
                 return this.currentRepository.createOneWithRelations(data);
-            }
-            else {
+            } else {
                 return this.baseAbstractRepository.create(data);
             }
         } catch (e) {
-            this.logger.error(`create. Class: ${this.constructor.name} Message: ${e.message}`);
+            const errorMessage = `create. Class: ${this.constructor.name} Message: ${e.message}`;
+            this.logger.error(errorMessage);
+            await this.slackService.sendError(errorMessage);
             throw new NotFoundException(`Cannot create entity.`);
         }
     }
@@ -45,7 +52,9 @@ export abstract class BaseAbstractService<T> implements BaseInterfaceService{
                 return this.baseAbstractRepository.findAll();
             }
         } catch (e) {
-            this.logger.error(`findAll. Class: ${this.constructor.name} Message: ${e.message}`);
+            const errorMessage = `findAll. Class: ${this.constructor.name} Message: ${e.message}`;
+            this.logger.error(errorMessage);
+            await this.slackService.sendError(errorMessage);
             throw new NotFoundException(`Cannot find all entities.`);
         }
     }
@@ -61,7 +70,9 @@ export abstract class BaseAbstractService<T> implements BaseInterfaceService{
             }
             return result;
         } catch (e) {
-            this.logger.error(`findOneById: ${id}. Class: ${this.constructor.name} Message: ${e.message}`);
+            const errorMessage = `findOneById: ${id}. Class: ${this.constructor.name} Message: ${e.message}`;
+            this.logger.error(errorMessage);
+            await this.slackService.sendError(errorMessage);
             throw new NotFoundException(`Cannot find an entity for ${id}`);
         }
     }
@@ -82,7 +93,9 @@ export abstract class BaseAbstractService<T> implements BaseInterfaceService{
                 return this.baseAbstractRepository.save(entityData);
             }
         } catch (e) {
-            this.logger.error(`update. Class: ${this.constructor.name} Message: ${e.message}`);
+            const errorMessage = `update. Class: ${this.constructor.name} Message: ${e.message}`;
+            this.logger.error(errorMessage);
+            await this.slackService.sendError(errorMessage);
             throw new NotFoundException(`Cannot update the entity.`);
         }
     }
