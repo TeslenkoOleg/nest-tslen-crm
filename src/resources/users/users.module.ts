@@ -14,9 +14,7 @@ import { UserChiefRelation } from '../../common/entities/UserChiefRelation';
 import { UserProbation } from '../../common/entities/UserProbation';
 import { UsersRepository } from './users.repository';
 import { JwtService } from '@nestjs/jwt';
-import { CompanyDaysOffRulesService } from '../company-days-off-rules/company-days-off-rules.service';
-import { CompanyDaysOffRulesModule } from '../company-days-off-rules/company-days-off-rules.module';
-
+import { SlackService } from '../../common/services/slack/slack.service';
 @Module({
 
     imports: [TypeOrmModule.forFeature([
@@ -36,7 +34,8 @@ import { CompanyDaysOffRulesModule } from '../company-days-off-rules/company-day
     providers: [
         UsersService,
         UsersRepository,
-        JwtService
+        JwtService,
+        SlackService
     ],
     exports: [UsersService]
 })

@@ -12,7 +12,7 @@ export class CompanyDaysOffRulesService extends BaseAbstractService<CompanyDaysO
     constructor (
     private readonly repository: CompanyDaysOffRulesRepository,
     ) {
-        super(repository);
+        super(repository, null);
         this.currentRepository = repository;
     }
 }
