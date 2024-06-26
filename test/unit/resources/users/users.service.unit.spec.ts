@@ -5,7 +5,7 @@ import { mockUser } from '../../../shared/users';
 describe('Users Service Unit Test', () => {
     let userService: UsersService;
     beforeAll(() => {
-        const { unit, unitRef } = TestBed.create(UsersService).compile();
+        const { unit } = TestBed.create(UsersService).compile();
         userService = unit;
     });
     it('should be defined', () => {
