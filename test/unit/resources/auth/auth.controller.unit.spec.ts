@@ -1,33 +1,16 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from '../../../../src/resources/auth/auth.controller';
 import { AuthService } from '../../../../src/resources/auth/auth.service';
-import { UsersService } from '../../../../src/resources/users/users.service';
-import { UsersRepository } from '../../../../src/resources/users/users.repository';
 import { SignInDto } from '../../../../src/resources/auth/dto/signIn.dto';
-import { JwtService } from '@nestjs/jwt';
+import { TestBed } from '@automock/jest';
 
 describe('AuthController', () => {
     let controller: AuthController;
     let authService: AuthService;
 
-    beforeEach(async () => {
-        const module: TestingModule = await Test.createTestingModule({
-            controllers: [AuthController],
-            providers: [
-                AuthService,
-                UsersService,
-                {
-                    provide: UsersRepository,
-                    useValue: {
-                        findOneByCondition: jest.fn(),
-                    }
-                },
-                JwtService
-            ],
-        }).compile();
-
-        controller = module.get<AuthController>(AuthController);
-        authService = module.get<AuthService>(AuthService);
+    beforeAll(async () => {
+        const { unit, unitRef } = TestBed.create(AuthController).compile();
+        controller = unit;
+        authService = unitRef.get(AuthService);
     });
 
     it('should be defined', () => {
