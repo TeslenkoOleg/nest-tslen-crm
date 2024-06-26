@@ -40,7 +40,7 @@ export abstract class BaseAbstractService<T> implements BaseInterfaceService{
     }
 
     delete (id: number): Promise<T> {
-        return Promise.resolve(undefined);
+        return Promise.resolve(id as unknown as T);
     }
 
     async findAll (user: Users): Promise<T[]> {
