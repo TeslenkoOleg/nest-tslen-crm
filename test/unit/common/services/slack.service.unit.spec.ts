@@ -57,5 +57,4 @@ describe('SlackService', () => {
         expect(service.sendInfo).toHaveBeenCalled();
         expect(result).toEqual(mockResponse);
     });
-
 });
