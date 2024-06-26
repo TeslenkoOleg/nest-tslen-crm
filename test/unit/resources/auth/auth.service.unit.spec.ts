@@ -1,12 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from '../../../../src/resources/auth/auth.service';
 import { UsersService } from '../../../../src/resources/users/users.service';
-import { UsersRepository } from '../../../../src/resources/users/users.repository';
 import { UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { mockUser } from '../../../shared/users';
 import { TestBed } from '@automock/jest';
-import { AuthController } from '../../../../src/resources/auth/auth.controller';
 
 describe('AuthService signIn', () => {
     let authService: AuthService;

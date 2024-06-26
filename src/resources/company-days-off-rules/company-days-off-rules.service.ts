@@ -1,6 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCompanyDaysOffRuleDto } from './dto/create-company-days-off-rule.dto';
-import { UpdateCompanyDaysOffRuleDto } from './dto/update-company-days-off-rule.dto';
 import { BaseAbstractService } from '../../common/services/base/base.abstract.service';
 import { CompanyDaysOffRules } from './entities/company-days-off-rules.entity';
 import { BaseInterfaceService } from '../../common/services/base/base.interface.service';
