@@ -6,7 +6,7 @@ describe('SlackService', () => {
     let service: SlackService;
 
     beforeAll(async () => {
-        const { unit, unitRef } = TestBed.create(SlackService).compile();
+        const { unit } = TestBed.create(SlackService).compile();
         service = unit;
     });
 
