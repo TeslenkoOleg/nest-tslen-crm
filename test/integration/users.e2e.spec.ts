@@ -9,6 +9,7 @@ import { UsersController } from '../../src/resources/users/users.controller';
 import { TestingModule } from '@nestjs/testing/testing-module';
 import { UsersRepository } from '../../src/resources/users/users.repository';
 import { mockUser } from '../shared/users';
+import { SlackService } from '../../src/common/services/slack/slack.service';
 
 describe('UsersController (e2e)', () => {
     let app: INestApplication;
@@ -38,6 +39,15 @@ describe('UsersController (e2e)', () => {
                             getUsersWithRelationsByDateRange: jest.fn(() => mockedUsers),
                         },
                     },
+                    {
+                        provide: SlackService,
+                        useValue: {
+                            send: jest.fn(),
+                            sendError: jest.fn(),
+                            sendWarning: jest.fn(),
+                            sendInfo: jest.fn(),
+                        }
+                    }
                 ],
             })
             .overrideGuard(AuthGuard).useValue(mockedAuthGuard)

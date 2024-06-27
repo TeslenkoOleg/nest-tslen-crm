@@ -10,6 +10,7 @@ import { AuthController } from '../../src/resources/auth/auth.controller';
 import { UsersService } from '../../src/resources/users/users.service';
 import { JwtService } from '@nestjs/jwt/dist/jwt.service';
 import { UsersRepository } from '../../src/resources/users/users.repository';
+import { SlackService } from '../../src/common/services/slack/slack.service';
 
 const AUTH_TOKEN_OBJECT: SignInResponseDto = { accessToken: 'fake-jwt-token' };
 describe('AuthController (e2e)', () => {
@@ -29,6 +30,15 @@ describe('AuthController (e2e)', () => {
                         findOneByCondition: jest.fn(() => true),
                     },
                 },
+                {
+                    provide: SlackService,
+                    useValue: {
+                        send: jest.fn(),
+                        sendError: jest.fn(),
+                        sendWarning: jest.fn(),
+                        sendInfo: jest.fn(),
+                    }
+                }
             ],
         })
             .compile();
