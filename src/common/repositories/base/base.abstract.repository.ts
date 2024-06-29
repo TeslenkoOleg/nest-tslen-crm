@@ -1,5 +1,5 @@
 import { BaseInterfaceRepository } from './base.interface.repository';
-import { DeepPartial, FindManyOptions, FindOptionsWhere, Repository } from 'typeorm';
+import { DeepPartial, DeleteResult, FindManyOptions, FindOptionsWhere, Repository } from 'typeorm';
 
 export abstract class BaseAbstractRepository<T> implements BaseInterfaceRepository<T>{
     protected repository: Repository<T>;
@@ -14,8 +14,8 @@ export abstract class BaseAbstractRepository<T> implements BaseInterfaceReposito
         return await this.repository.save(data);
     }
 
-    delete (id: number): Promise<boolean> {
-        return Promise.resolve(false);
+    async delete (id: number): Promise<DeleteResult> {
+        return await this.repository.delete(id);
     }
 
     public async findAll (): Promise<T[]> {
