@@ -2,7 +2,7 @@ import { BaseAbstractRepository } from '../../repositories/base/base.abstract.re
 import { BaseInterfaceService } from './base.interface.service';
 import { Users } from '../../../resources/users/entities/users.entity';
 import { Logger, NotFoundException } from '@nestjs/common';
-import { DeepPartial } from 'typeorm';
+import { DeepPartial, DeleteResult } from 'typeorm';
 import { SlackService } from '../slack/slack.service';
 
 export abstract class BaseAbstractService<T> implements BaseInterfaceService{
@@ -39,8 +39,25 @@ export abstract class BaseAbstractService<T> implements BaseInterfaceService{
         }
     }
 
-    delete (id: number): Promise<T> {
-        return Promise.resolve(id as unknown as T);
+    async delete(id: number): Promise<DeleteResult> {
+        const entity: T = await this.baseAbstractRepository.findOne(id);
+        if (!entity) {
+            this.logger.error(`delete. Class: ${this.constructor.name} Message: Cannot find an entity for ${id}`);
+            throw new NotFoundException(`Cannot find an entity for ${id}`);
+        }
+        try {
+            if ('deleteOneWithRelations' in this.currentRepository) {
+                return this.currentRepository.deleteOneWithRelations(entity);
+            }
+            else {
+                return this.baseAbstractRepository.delete(id);
+            }
+        } catch (e) {
+            const errorMessage = `delete. Class: ${this.constructor.name} Message: ${e.message}`;
+            this.logger.error(errorMessage);
+            await this.slackService.sendError(errorMessage);
+            throw new NotFoundException(`Cannot delete the entity.`);
+        }
     }
 
     async findAll (user: Users): Promise<T[]> {

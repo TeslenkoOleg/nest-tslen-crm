@@ -16,7 +16,7 @@ import { JobPosition } from '../../../common/entities/JobPosition';
 import { BaseAbstractEntity } from '../../../common/entities/base/base.abstract.entity';
 
 @Index("email", ["email"], { unique: true })
-@Entity("users", { schema: "tslen" })
+@Entity("users")
 export class Users extends BaseAbstractEntity<Users> {
   @Column("enum", {
     name: "role",
