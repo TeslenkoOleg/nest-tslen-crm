@@ -39,7 +39,7 @@ export abstract class BaseAbstractService<T> implements BaseInterfaceService{
         }
     }
 
-    async delete(id: number): Promise<DeleteResult> {
+    async delete (id: number): Promise<DeleteResult> {
         const entity: T = await this.baseAbstractRepository.findOne(id);
         if (!entity) {
             this.logger.error(`delete. Class: ${this.constructor.name} Message: Cannot find an entity for ${id}`);

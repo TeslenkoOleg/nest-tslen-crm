@@ -8,7 +8,7 @@ import { Request } from 'express';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor (
+    constructor (
     private jwtService: JwtService,
     private configService: ConfigService,
     private reflector: Reflector
@@ -16,11 +16,11 @@ export class RolesGuard implements CanActivate {
 
     async canActivate (context: ExecutionContext): Promise<boolean> {
         const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
-          context.getHandler(),
-          context.getClass(),
+            context.getHandler(),
+            context.getClass(),
         ]);
         if (!requiredRoles) {
-          return true;
+            return true;
         }
         const request = context.switchToHttp().getRequest();
         const token = this.extractTokenFromHeader(request);
@@ -38,7 +38,7 @@ export class RolesGuard implements CanActivate {
         } catch {
             throw new UnauthorizedException();
         }
-      return requiredRoles.includes(payload.user?.role);
+        return requiredRoles.includes(payload.user?.role);
     }
 
     private extractTokenFromHeader (request: Request): string | undefined {

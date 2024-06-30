@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 export class PostsRepository extends BaseAbstractRepository<Posts>{
-  constructor (
+    constructor (
     @InjectRepository(Posts)
     private readonly postsRepository: Repository<Posts>
     ) {
