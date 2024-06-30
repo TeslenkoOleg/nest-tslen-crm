@@ -1,4 +1,4 @@
-import { DeepPartial, DeleteResult, FindManyOptions } from 'typeorm';
+import { DeepPartial, DeleteResult } from 'typeorm';
 
 export interface BaseInterfaceRepository<T> {
     create(data: DeepPartial<T>): Promise<T>;
@@ -6,5 +6,5 @@ export interface BaseInterfaceRepository<T> {
     delete(id: number): Promise<DeleteResult>;
     findAll(): Promise<T[]>;
     findOne(id: any): Promise<T>;
-    findWithRelations(relations: FindManyOptions<T>): Promise<T[]>;
+    // findWithRelations(relations: FindManyOptions<T>): Promise<T[]>;
 }

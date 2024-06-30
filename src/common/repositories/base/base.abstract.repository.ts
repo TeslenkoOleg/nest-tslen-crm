@@ -1,5 +1,5 @@
 import { BaseInterfaceRepository } from './base.interface.repository';
-import { DeepPartial, DeleteResult, FindManyOptions, FindOptionsWhere, Repository } from 'typeorm';
+import { DeepPartial, DeleteResult, FindOptionsWhere, Repository } from 'typeorm';
 
 export abstract class BaseAbstractRepository<T> implements BaseInterfaceRepository<T>{
     protected repository: Repository<T>;
@@ -26,9 +26,9 @@ export abstract class BaseAbstractRepository<T> implements BaseInterfaceReposito
         return await this.repository.findOne(options);
     }
 
-    findWithRelations (relations: FindManyOptions<T>): Promise<T[]> {
-        return Promise.resolve([]);
-    }
+    // findWithRelations (relations: FindManyOptions<T>): Promise<T[]> {
+    //     return Promise.resolve([]);
+    // }
 
     public async save (data: DeepPartial<T>): Promise<T> {
         return await this.repository.save(data);
