@@ -24,10 +24,10 @@ export abstract class BaseAbstractService<T> implements BaseInterfaceService{
         }
     }
 
-    async create (data: T): Promise<T> {
+    async create (data: T, user: Users = null): Promise<T> {
         try {
             if ('createOneWithRelations' in this.currentRepository) {
-                return this.currentRepository.createOneWithRelations(data);
+                return this.currentRepository.createOneWithRelations(data, user);
             } else {
                 return this.baseAbstractRepository.create(data);
             }
@@ -47,7 +47,7 @@ export abstract class BaseAbstractService<T> implements BaseInterfaceService{
         }
         try {
             if ('deleteOneWithRelations' in this.currentRepository) {
-                return this.currentRepository.deleteOneWithRelations(entity);
+                return this.currentRepository.deleteOneWithRelations(id, entity);
             }
             else {
                 return this.baseAbstractRepository.delete(id);
@@ -100,8 +100,7 @@ export abstract class BaseAbstractService<T> implements BaseInterfaceService{
             this.logger.error(`update. Class: ${this.constructor.name} Message: Cannot find an entity for ${id}`);
             throw new NotFoundException(`Cannot find an entity for ${id}`);
         }
-
-        const entityData: DeepPartial<T> = Object.assign(entity, data);
+        const entityData: T = Object.assign(entity, data);
         try {
             if ('updateOneWithRelations' in this.currentRepository) {
                 return this.currentRepository.updateOneWithRelations(entityData);

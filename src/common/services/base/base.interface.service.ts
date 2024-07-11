@@ -8,5 +8,5 @@ export interface BaseInterfaceService {
   findAll(user: Users): Promise<any[]>;
   findOneById(id: number, user: Users): Promise<any>;
   findOneByCondition(options: FindOptionsWhere<any>): Promise<any>;
-  update(id: number, data: any): Promise<any>;
+  update(id: number, data: any, user: Users): Promise<any>;
 }

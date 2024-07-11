@@ -7,13 +7,13 @@ import {
 } from "typeorm";
 import { UserRelationToGroup } from './UserRelationToGroup';
 import { DaysOff } from '../../../common/entities/DaysOff';
-import { EventsByUser } from '../../../common/entities/EventsByUser';
 import { UserChiefRelation } from '../../../common/entities/UserChiefRelation';
 import { TaskProjectPermission } from '../../../common/entities/TaskProjectPermission';
 import { GoogleCalendar } from '../../../common/entities/GoogleCalendar';
 import { UserProbation } from '../../../common/entities/UserProbation';
 import { JobPosition } from '../../../common/entities/JobPosition';
 import { BaseAbstractEntity } from '../../../common/entities/base/base.abstract.entity';
+import { EventsByUser } from '../../events-by-user/entities/events-by-user.entity';
 
 @Index("email", ["email"], { unique: true })
 @Entity("users")

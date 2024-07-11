@@ -23,7 +23,10 @@ export class UsersController {
         return this.usersService.findOneById(id, user);
     }
     @Patch(':id')
-    update (@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto): Promise<Users> {
+    update (
+      @Param('id', ParseIntPipe) id: number,
+      @Body() updateUserDto: UpdateUserDto
+    ): Promise<Users> {
         return this.usersService.update(id, updateUserDto);
     }
     @Get('/birthday-anniversary')
