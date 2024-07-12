@@ -1,4 +1,3 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { EventsByUserService } from '../../../../src/resources/events-by-user/events-by-user.service';
 import { TestBed } from '@automock/jest';
 import { mockedDateRangeDto, mockedEventByUser } from '../../../shared/event-by-user';
