@@ -12,7 +12,7 @@ export class EventsByUserSubscriber implements EntitySubscriberInterface<EventsB
     listenTo () {
         return EventsByUser;
     }
-    async afterUpdate (event: UpdateEvent<EventsByUser>) {
+    async afterUpdate (event: UpdateEvent<EventsByUser>): Promise<void> {
         const entityManager = event.manager;
         const databaseEntity = event.databaseEntity;
         const entity = event.entity;
