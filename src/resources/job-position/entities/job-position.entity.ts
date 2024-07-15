@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Users } from '../../resources/users/entities/users.entity';
+import { Users } from '../../users/entities/users.entity';
 
 @Entity("jobPosition", { schema: "tslen" })
 export class JobPosition {
@@ -12,3 +12,4 @@ export class JobPosition {
     @OneToMany(() => Users, (users) => users.jobPosition)
         users: Users[];
 }
+

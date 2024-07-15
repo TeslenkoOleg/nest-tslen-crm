@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { UsersGroup } from "../../resources/users/entities/UsersGroup";
 import { CompanyDaysOffRules } from "../../resources/company-days-off-rules/entities/company-days-off-rules.entity";
 import { DaysOffScheduler } from "./DaysOffScheduler";
+import { UserGroup } from '../../resources/user-group/entities/user-group.entity';
 
 @Entity("companies", { schema: "tslen" })
 export class Companies {
@@ -26,6 +26,6 @@ export class Companies {
     )
         daysOffSchedulers: DaysOffScheduler[];
 
-    @OneToMany(() => UsersGroup, (usersGroup) => usersGroup.company)
-        usersGroups: UsersGroup[];
+    @OneToMany(() => UserGroup, (usersGroup) => usersGroup.company)
+        usersGroups: UserGroup[];
 }

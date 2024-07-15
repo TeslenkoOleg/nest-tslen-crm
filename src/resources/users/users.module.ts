@@ -4,7 +4,6 @@ import { UsersController } from './users.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Users } from './entities/users.entity';
 import { UserRelationToGroup } from './entities/UserRelationToGroup';
-import { UsersGroup } from './entities/UsersGroup';
 import { Companies } from '../../common/entities/Companies';
 import { CompanyDaysOffRules } from '../company-days-off-rules/entities/company-days-off-rules.entity';
 import { DaysOffScheduler } from '../../common/entities/DaysOffScheduler';
@@ -14,18 +13,21 @@ import { UserProbation } from '../../common/entities/UserProbation';
 import { UsersRepository } from './users.repository';
 import { JwtService } from '@nestjs/jwt';
 import { SlackService } from '../../common/services/slack/slack.service';
+import { UserGroup } from '../user-group/entities/user-group.entity';
+import { JobPosition } from '../job-position/entities/job-position.entity';
 @Module({
 
     imports: [TypeOrmModule.forFeature([
         Users,
         UserRelationToGroup,
-        UsersGroup,
+        UserGroup,
         Companies,
         CompanyDaysOffRules,
         DaysOffScheduler,
         DaysOff,
         UserChiefRelation,
-        UserProbation
+        UserProbation,
+        JobPosition
     ])
     ],
     controllers: [UsersController],

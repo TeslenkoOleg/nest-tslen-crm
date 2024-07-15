@@ -7,12 +7,12 @@ import {
     OneToMany,
     PrimaryGeneratedColumn,
 } from "typeorm";
-import { UserRelationToGroup } from "./UserRelationToGroup";
 import { Companies } from "../../../common/entities/Companies";
+import { UserRelationToGroup } from '../../users/entities/UserRelationToGroup';
 
 @Index("usersGroup_companies_null_fk", ["companyId"], {})
 @Entity("usersGroup", { schema: "tslen" })
-export class UsersGroup {
+export class UserGroup {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
       id: number;
 
