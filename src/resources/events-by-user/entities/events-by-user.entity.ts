@@ -1,20 +1,11 @@
-import {
-    Column,
-    Entity,
-    Index,
-    JoinColumn,
-    ManyToOne,
-    PrimaryGeneratedColumn,
-} from "typeorm";
-import { Users } from '../../resources/users/entities/users.entity';
+import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import { Users } from '../../users/entities/users.entity';
+import { BaseAbstractEntity } from '../../../common/entities/base/base.abstract.entity';
 
 
 @Index("eventsByUser_users_null_fk", ["userId"], {})
-@Entity("eventsByUser", { schema: "tslen" })
-export class EventsByUser {
-  @PrimaryGeneratedColumn({ type: "int", name: "id" })
-      id: number;
-
+@Entity("eventsByUser")
+export class EventsByUser extends BaseAbstractEntity<EventsByUser>{
   @Column("int", { name: "userId", nullable: true })
       userId: number | null;
 

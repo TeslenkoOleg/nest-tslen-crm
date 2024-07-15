@@ -6,8 +6,8 @@ import { User } from '../users/decorators/user.decorator';
 import { Users } from '../users/entities/users.entity';
 import { Posts } from './entities/post.entity';
 import { DeleteResult } from 'typeorm';
-import { Roles } from '../../common/roles/roles.decorator';
-import { Role } from '../../common/roles/role.enum';
+import { Roles } from '../../common/guards/roles/roles.decorator';
+import { Role } from '../../common/guards/roles/role.enum';
 
 @Controller('posts')
 export class PostsController {
@@ -24,8 +24,9 @@ export class PostsController {
       return this.postsService.findAll(user);
   }
   @Patch(':id')
-  @Roles(Role.Admin)
-  update (@Param('id', ParseIntPipe) id: number, @Body() updatePostDto: UpdatePostDto): Promise<Posts> {
+  update (@Param('id', ParseIntPipe) id: number,
+          @Body() updatePostDto: UpdatePostDto
+  ): Promise<Posts> {
       return this.postsService.update(+id, updatePostDto);
   }
 

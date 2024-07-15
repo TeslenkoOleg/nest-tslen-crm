@@ -9,7 +9,6 @@ import { Companies } from '../../common/entities/Companies';
 import { CompanyDaysOffRules } from '../company-days-off-rules/entities/company-days-off-rules.entity';
 import { DaysOffScheduler } from '../../common/entities/DaysOffScheduler';
 import { DaysOff } from '../../common/entities/DaysOff';
-import { EventsByUser } from '../../common/entities/EventsByUser';
 import { UserChiefRelation } from '../../common/entities/UserChiefRelation';
 import { UserProbation } from '../../common/entities/UserProbation';
 import { UsersRepository } from './users.repository';
@@ -25,7 +24,6 @@ import { SlackService } from '../../common/services/slack/slack.service';
         CompanyDaysOffRules,
         DaysOffScheduler,
         DaysOff,
-        EventsByUser,
         UserChiefRelation,
         UserProbation
     ])
