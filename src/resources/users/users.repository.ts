@@ -77,6 +77,9 @@ export class UsersRepository extends BaseAbstractRepository<Users>{
         });
     }
     public convertDateWithoutTimezoneOffset (date: Date): any {
+        if (!date) {
+            return null;
+        }
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
         const day = String(date.getDate()).padStart(2, '0');
@@ -104,8 +107,10 @@ export class UsersRepository extends BaseAbstractRepository<Users>{
     public async getUsersWithRelationsByDateRange (user: Users, { startDate, endDate }): Promise<Users[]> {
         const qb: SelectQueryBuilder<Users> = this.usersRepository.createQueryBuilder('user');
         const companyId = user.companyId;
+        startDate = startDate.toISOString();
+        endDate = endDate.toISOString();
         qb.select();
-        qb.where("companyId = :companyId", { companyId: companyId })
+        qb.where(`companyId = ${companyId}`)
             .leftJoinAndSelect('user.eventsByUsers', 'eventsByUsers',
                 `eventsByUsers.approved = 1 
                           and eventsByUsers.isGoogleEvent = 0
@@ -114,7 +119,7 @@ export class UsersRepository extends BaseAbstractRepository<Users>{
             .leftJoinAndSelect('user.userProbation', 'userProbation',
                 `(userProbation.start BETWEEN '${startDate}' AND '${endDate}'
                           or userProbation.end BETWEEN '${startDate}' AND '${endDate}')`)
-        qb.orderBy('user.id', "DESC")
+        qb.orderBy('user.id', "DESC");
         return await qb.getMany();
     }
 }

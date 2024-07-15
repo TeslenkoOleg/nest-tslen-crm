@@ -24,7 +24,6 @@ export class PostsController {
       return this.postsService.findAll(user);
   }
   @Patch(':id')
-  @Roles(Role.Admin)
   update (@Param('id', ParseIntPipe) id: number,
           @Body() updatePostDto: UpdatePostDto
   ): Promise<Posts> {

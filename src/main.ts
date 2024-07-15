@@ -8,7 +8,22 @@ import { TimeoutInterceptor } from './common/interceptors/timeout.interceptor';
 async function bootstrap () {
     const app = await NestFactory.create(AppModule);
     const isProduction = app.get(ConfigService).get('MODE') === 'PROD';
+
+    const whitelistOrigin = [app.get(ConfigService).get('FRONT_DOMAIN')];
+    app.enableCors({
+        origin: function (origin, callback) {
+            if (whitelistOrigin.indexOf(origin) !== -1) {
+                callback(null, true)
+            } else {
+                callback(new Error('Not allowed by CORS'), false)
+            }
+        },
+        allowedHeaders: 'Authorization, Origin, X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Observe',
+        methods: "GET,PUT,POST,DELETE,UPDATE,OPTIONS, PATCH",
+        credentials: true,
+    });
     app.setGlobalPrefix('/api/v' + app.get(ConfigService).get('API_VERSION')); // Setting base path
+
     app.useGlobalPipes(new ValidationPipe({ transform: true }));
     // interceptors
     app.useGlobalInterceptors(new TimeoutInterceptor());
