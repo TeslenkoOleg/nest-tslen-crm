@@ -5,7 +5,7 @@ describe('UserGroupService', () => {
     let service: UserGroupService;
 
     beforeEach(() => {
-        const {unit} = TestBed.create(UserGroupService).compile();
+        const { unit } = TestBed.create(UserGroupService).compile();
         service = unit;
     });
 

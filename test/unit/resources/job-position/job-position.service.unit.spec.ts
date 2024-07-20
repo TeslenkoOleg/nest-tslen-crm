@@ -5,7 +5,7 @@ describe('JobPositionService', () => {
     let service: JobPositionService;
 
     beforeEach(async () => {
-        const {unit} = TestBed.create(JobPositionService).compile();
+        const { unit } = TestBed.create(JobPositionService).compile();
         service = unit;
     });
 
