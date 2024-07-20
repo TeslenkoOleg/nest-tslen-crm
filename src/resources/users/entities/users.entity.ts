@@ -11,9 +11,9 @@ import { UserChiefRelation } from '../../../common/entities/UserChiefRelation';
 import { TaskProjectPermission } from '../../../common/entities/TaskProjectPermission';
 import { GoogleCalendar } from '../../../common/entities/GoogleCalendar';
 import { UserProbation } from '../../../common/entities/UserProbation';
-import { JobPosition } from '../../../common/entities/JobPosition';
 import { BaseAbstractEntity } from '../../../common/entities/base/base.abstract.entity';
 import { EventsByUser } from '../../events-by-user/entities/events-by-user.entity';
+import { JobPosition } from '../../job-position/entities/job-position.entity';
 
 @Index("email", ["email"], { unique: true })
 @Entity("users")

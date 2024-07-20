@@ -3,7 +3,6 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { TaskProjectPermission } from '../entities/TaskProjectPermission';
 import { GoogleCalendar } from '../entities/GoogleCalendar';
-import { JobPosition } from '../entities/JobPosition';
 import { TaskProject } from '../entities/TaskProject';
 import { TaskPhase } from '../entities/TaskPhase';
 import { Tasks } from '../entities/Tasks';
@@ -23,7 +22,6 @@ import { ProjectPhasesRelation } from '../entities/ProjectPhasesRelation';
                 entities: [
                     TaskProjectPermission,
                     GoogleCalendar,
-                    JobPosition,
                     TaskProject,
                     TaskPhase,
                     Tasks,

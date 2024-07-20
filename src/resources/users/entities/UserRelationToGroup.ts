@@ -5,9 +5,9 @@ import {
     JoinColumn,
     ManyToOne
 } from "typeorm";
-import { UsersGroup } from "./UsersGroup";
 import { Users } from './users.entity';
 import { BaseAbstractEntity } from '../../../common/entities/base/base.abstract.entity';
+import { UserGroup } from '../../user-group/entities/user-group.entity';
 
 @Index("userRelationToGroup_users_null_fk", ["userId"], {})
 @Index("userRelationToGroup_usersGroup_null_fk", ["groupId"], {})
@@ -21,12 +21,12 @@ export class UserRelationToGroup extends BaseAbstractEntity<UserRelationToGroup>
   groupId: number | null;
 
   @ManyToOne(
-      () => UsersGroup,
-      (usersGroup) => usersGroup.userRelationToGroups,
+      () => UserGroup,
+      (userGroup) => userGroup.userRelationToGroups,
       { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
   )
   @JoinColumn([{ name: "groupId", referencedColumnName: "id" }])
-  group: UsersGroup;
+  group: UserGroup;
 
   @ManyToOne(() => Users, (users) => users.id, {
       onDelete: "NO ACTION",
