@@ -7,7 +7,7 @@ import {
     PrimaryGeneratedColumn,
 } from "typeorm";
 import { TaskPhase } from "./TaskPhase";
-import { TaskProject } from "./TaskProject";
+import { TaskProject } from '../../resources/task-project/entities/task-project.entity';
 
 @Index("projectPhasesRelation_taskPhase_id_fk", ["phaseId"], {})
 @Index("projectPhasesRelation_taskProject_id_fk", ["projectId"], {})

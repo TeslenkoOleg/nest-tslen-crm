@@ -3,11 +3,13 @@ import {
     Entity,
     Index,
     JoinColumn,
-    ManyToOne,
-    PrimaryGeneratedColumn,
-} from "typeorm";
+    ManyToOne, OneToMany, OneToOne,
+    PrimaryGeneratedColumn
+} from 'typeorm';
 import { TaskPhase } from "./TaskPhase";
-import { TaskProject } from "./TaskProject";
+import { TaskProject } from '../../resources/task-project/entities/task-project.entity';
+import { TaskAttachments } from './TaskAttachments';
+import { OrderInPhase } from './OrderInPhase';
 
 @Index("tasks_taskPhase_id_fk", ["phaseId"], {})
 @Index("tasks_taskProject_id_fk", ["projectId"], {})
@@ -72,13 +74,18 @@ export class Tasks {
   })
 
   @JoinColumn([{ name: "phaseId", referencedColumnName: "id" }])
-      phaseL: TaskPhase;
+      phases: TaskPhase;
 
   @ManyToOne(() => TaskProject, (taskProject) => taskProject.tasks, {
       onDelete: "NO ACTION",
       onUpdate: "NO ACTION",
   })
-
   @JoinColumn([{ name: "projectId", referencedColumnName: "id" }])
-      project2: TaskProject;
+      project: TaskProject;
+
+  @OneToMany(() => TaskAttachments, (taskAttachments) => taskAttachments.task)
+      taskAttachments: TaskAttachments[];
+
+  @OneToOne(() => OrderInPhase, (orderInPhase) => orderInPhase.task)
+      orderInPhases: OrderInPhase;
 }

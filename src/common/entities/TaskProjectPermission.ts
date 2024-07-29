@@ -6,8 +6,8 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
 } from "typeorm";
-import { TaskProject } from "./TaskProject";
 import { Users } from '../../resources/users/entities/users.entity';
+import { TaskProject } from '../../resources/task-project/entities/task-project.entity';
 
 @Index("taskProjectPermission_taskProject_id_fk", ["projectId"], {})
 @Index("taskProjectPermission_users_id_fk", ["userId"], {})
@@ -39,7 +39,7 @@ export class TaskProjectPermission {
 
   @ManyToOne(() => Users, (users) => users.taskProjectPermissions, {
       onDelete: "NO ACTION",
-      onUpdate: "NO ACTION",
+      onUpdate: "NO ACTION"
   })
   @JoinColumn([{ name: "userId", referencedColumnName: "id" }])
       user: Users;
