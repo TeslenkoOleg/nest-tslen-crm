@@ -7,6 +7,7 @@ import { PostsModule } from './resources/posts/posts.module';
 import { EventsByUserModule } from './resources/events-by-user/events-by-user.module';
 import { JobPositionModule } from './resources/job-position/job-position.module';
 import { UserGroupModule } from './resources/user-group/user-group.module';
+import { TaskProjectModule } from './resources/task-project/task-project.module';
 @Module({
     imports: [
         ConfigModule.forRoot({ isGlobal: true }),
@@ -16,7 +17,8 @@ import { UserGroupModule } from './resources/user-group/user-group.module';
         PostsModule,
         EventsByUserModule,
         JobPositionModule,
-        UserGroupModule
+        UserGroupModule,
+        TaskProjectModule
     ],
 })
 export class AppModule {}

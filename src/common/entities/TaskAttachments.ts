@@ -1,11 +1,9 @@
 import {
     Column,
-    Entity,
-    PrimaryGeneratedColumn,
-} from "typeorm";
-
-
-
+    Entity, JoinColumn, ManyToOne,
+    PrimaryGeneratedColumn
+} from 'typeorm';
+import { Tasks } from './Tasks';
 @Entity("taskAttachments", { schema: "tslen-crm" })
 export class TaskAttachments {
     @PrimaryGeneratedColumn({ type: "int", name: "id" })
@@ -29,5 +27,10 @@ export class TaskAttachments {
     @Column("varchar", { name: "type", nullable: true, length: 255 })
         type: "string" | null;
 
-
+    @ManyToOne(() => Tasks, (tasks) => tasks.taskAttachments, {
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+    })
+    @JoinColumn([{ name: "taskId", referencedColumnName: "id" }])
+        task: Tasks;
 }

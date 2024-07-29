@@ -1,9 +1,9 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Tasks } from "./Tasks";
-import { ProjectPhasesRelation } from "./ProjectPhasesRelation";
-import { TaskProjectPermission } from "./TaskProjectPermission";
+import { ProjectPhasesRelation } from '../../../common/entities/ProjectPhasesRelation';
+import { TaskProjectPermission } from '../../../common/entities/TaskProjectPermission';
+import { Tasks } from '../../../common/entities/Tasks';
 
-@Entity("taskProject", { schema: "tslen" })
+@Entity("taskProject")
 export class TaskProject {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
       id: number;
@@ -40,10 +40,10 @@ export class TaskProject {
 
   @OneToMany(
       () => TaskProjectPermission,
-      (taskProjectPermission) => taskProjectPermission.project
+      (taskProjectPermission) => taskProjectPermission.project,  { cascade: true }
   )
       taskProjectPermissions: TaskProjectPermission[];
 
-  @OneToMany(() => Tasks, (tasks) => tasks.projectId)
+  @OneToMany(() => Tasks, (tasks) => tasks.project)
       tasks: Tasks[];
 }

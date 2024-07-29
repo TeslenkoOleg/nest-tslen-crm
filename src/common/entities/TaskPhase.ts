@@ -18,6 +18,6 @@ export class TaskPhase {
   @Column("datetime", { name: "updatedAt", nullable: true })
       updatedAt: Date | null;
 
-  @OneToMany(() => Tasks, (tasks) => tasks.phaseId)
+  @OneToMany(() => Tasks, (tasks) => tasks.phases)
       tasks: Tasks[];
 }
