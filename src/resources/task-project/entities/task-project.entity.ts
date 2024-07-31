@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ProjectPhasesRelation } from '../../../common/entities/ProjectPhasesRelation';
 import { TaskProjectPermission } from '../../../common/entities/TaskProjectPermission';
 import { Tasks } from '../../../common/entities/Tasks';
