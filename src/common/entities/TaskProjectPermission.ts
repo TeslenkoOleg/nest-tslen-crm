@@ -9,15 +9,14 @@ import {
 import { Users } from '../../resources/users/entities/users.entity';
 import { TaskProject } from '../../resources/task-project/entities/task-project.entity';
 
-@Index("taskProjectPermission_taskProject_id_fk", ["projectId"], {})
 @Index("taskProjectPermission_users_id_fk", ["userId"], {})
-@Entity("taskProjectPermission", { schema: "tslen" })
+@Entity("taskProjectPermission")
 export class TaskProjectPermission {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
       id: number;
 
-  @Column("int", { name: "projectId" })
-      projectId: number;
+  @Column("int", { name: "projectId", nullable: true })
+      projectId: number | null;
 
   @Column("int", { name: "userId" })
       userId: number;
@@ -32,7 +31,7 @@ export class TaskProjectPermission {
   @ManyToOne(
       () => TaskProject,
       (taskProject) => taskProject.taskProjectPermissions,
-      { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
+      { onDelete: 'CASCADE', orphanedRowAction: 'delete' }
   )
   @JoinColumn([{ name: "projectId", referencedColumnName: "id" }])
       project: TaskProject;

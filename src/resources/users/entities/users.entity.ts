@@ -94,7 +94,6 @@ export class Users extends BaseAbstractEntity<Users> {
   @Column("varchar", { name: "jobPosition", nullable: true })
   jobPosition: string | null;
 
-
   @OneToMany(
       () => UserRelationToGroup,
       (userRelationToGroup) => userRelationToGroup.user, { cascade: true }
