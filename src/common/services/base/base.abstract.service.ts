@@ -23,7 +23,6 @@ export abstract class BaseAbstractService<T> implements BaseInterfaceService{
             throw new NotFoundException(`Cannot find the entity for - ${JSON.stringify(options)}`);
         }
     }
-
     async create (data: T, user: Users = null): Promise<T> {
         try {
             if ('createOneWithRelations' in this.currentRepository) {

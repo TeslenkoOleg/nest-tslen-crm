@@ -1,17 +1,13 @@
 import { BaseAbstractRepository } from '../../common/repositories/base/base.abstract.repository';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EntityManager, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { TaskProject } from './entities/task-project.entity';
 import { Users } from '../users/entities/users.entity';
-import { UpdateEventsByUserDto } from '../events-by-user/dto/update-events-by-user.dto';
-import { UpdateTaskProjectDto } from './dto/update-task-project.dto';
-import { TaskProjectPermission } from '../../common/entities/TaskProjectPermission';
 
 export class TaskProjectRepository extends BaseAbstractRepository<TaskProject>{
     constructor (
     @InjectRepository(TaskProject)
-    private readonly taskProjectRepository: Repository<TaskProject>,
-    private entityManager: EntityManager
+    private readonly taskProjectRepository: Repository<TaskProject>
     ) {
         super(taskProjectRepository);
     }
